@@ -7,8 +7,12 @@ assignees: 'bestriser'
 
 ---
 
-## 参考URL
-- 
-
 ## 関連Issue
-- 
+- #xx
+
+## 解決したい事
+- ◯◯できるようにする
+- △△できるようにする
+
+## 参考URL
+- [ホゲホゲ.com](https://hogehoge.com/)
