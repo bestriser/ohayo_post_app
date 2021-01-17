@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ohayo_post_app/add_user.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -72,6 +73,22 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AddUser(
+                            'John Doe',
+                            'Stokes and Sons',
+                            42,
+                          ),
+                        ));
+                  },
+                  child: Text(
+                    "ユーザー追加画面",
+                  ),
+                ),
                 Text('_initialized: ${_initialized.toString()}'),
                 Text('_error: ${_error.toString()}'),
                 Text(
