@@ -73,30 +73,29 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => AddUser(
-                            'John Doe',
-                            'Stokes and Sons',
-                            42,
-                          ),
-                        ));
-                  },
-                  child: Text(
-                    "ユーザー追加画面",
-                  ),
-                ),
-                Text('_initialized: ${_initialized.toString()}'),
-                Text('_error: ${_error.toString()}'),
                 Text(
                   'You have pushed the button this many times:',
                 ),
                 Text(
                   '$_counter',
                   style: Theme.of(context).textTheme.headline4,
+                ),
+                Text('_initialized: ${_initialized.toString()}'),
+                Text('_error: ${_error.toString()}'),
+                RaisedButton(
+                  child: Text(
+                    "ユーザー登録画面",
+                  ),
+                  color: Colors.orange,
+                  textColor: Colors.white,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AddUserScreen(),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
