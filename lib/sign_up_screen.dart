@@ -3,33 +3,33 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class SignUpScreen extends StatefulWidget {
+class LoginScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return SignUpScreenState();
+    return LoginScreenState();
   }
 }
 
-class SignUpScreenState extends State<SignUpScreen> {
+class LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('朝活パーソン登録'),
       ),
-      body: SignUpForm(),
+      body: LoginForm(),
     );
   }
 }
 
-class SignUpForm extends StatefulWidget {
+class LoginForm extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return SignUpFormState();
+    return LoginFormState();
   }
 }
 
-class SignUpFormState extends State<SignUpForm> {
+class LoginFormState extends State<LoginForm> {
   String nickName;
   String email;
   String password;
@@ -38,7 +38,7 @@ class SignUpFormState extends State<SignUpForm> {
 
   CollectionReference users = FirebaseFirestore.instance.collection('users');
 
-  Future<void> signUpUser(String nickName, String email, String password) {
+  Future<void> loginUser(String nickName, String email, String password) {
     return users
         .add({
           'nickName': nickName,
@@ -50,21 +50,15 @@ class SignUpFormState extends State<SignUpForm> {
   }
 
   void _setNickName(String e) {
-    setState(() {
-      nickName = e;
-    });
+    setState(() => nickName = e);
   }
 
   void _setEmail(String e) {
-    setState(() {
-      email = e;
-    });
+    setState(() => email = e);
   }
 
   void _setPassword(String e) {
-    setState(() {
-      password = e;
-    });
+    setState(() => password = e);
   }
 
   @override
@@ -156,7 +150,7 @@ class SignUpFormState extends State<SignUpForm> {
                   _formKey.currentState.save();
                   Scaffold.of(context).showSnackBar(
                       SnackBar(content: Text('朝活パーソンの登録が完了しました。')));
-                  return signUpUser(nickName, email, password);
+                  return loginUser(nickName, email, password);
                 } else {
                   Scaffold.of(context).showSnackBar(
                       SnackBar(content: Text('朝活パーソンの登録が失敗しました。')));
