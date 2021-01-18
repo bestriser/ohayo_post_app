@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -38,15 +39,33 @@ class RegistrationFormState extends State<RegistrationForm> {
 
   CollectionReference users = FirebaseFirestore.instance.collection('users');
 
-  Future<void> registerUser(String nickName, String email, String password) {
-    return users
-        .add({
-          'nickName': nickName,
-          'email': email,
-          'password': password,
-        })
-        .then((value) => print("Registered user"))
-        .catchError((error) => print("Failed to register user: $error"));
+  Future<String> registerUser(
+      String nickName, String email, String password) async {
+    String authenticatedError = '';
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+      await users
+          .add({
+            'uid': userCredential.user.uid,
+            'nickName': nickName,
+            'email': email,
+            'createAt': Timestamp.now(),
+          })
+          .then((value) => print("Registered user"))
+          .catchError((error) => print("Failed to register user: $error"));
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'invalid-email') {
+        authenticatedError = 'メールアドレスの形式が正しくありません。';
+      } else if (e.code == 'email-already-in-use') {
+        authenticatedError = 'そのメールアドレスのアカウントはすでに存在しています。';
+      } else {
+        authenticatedError = e.code;
+      }
+    } catch (e) {
+      print(e);
+    }
+    return authenticatedError;
   }
 
   void _setNickName(String e) {
@@ -145,33 +164,39 @@ class RegistrationFormState extends State<RegistrationForm> {
               ),
               color: Colors.orange,
               textColor: Colors.white,
-              onPressed: () {
+              onPressed: () async {
                 if (_formKey.currentState.validate()) {
                   _formKey.currentState.save();
-                  registerUser(nickName, email, password);
-                  showDialog<int>(
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text('朝活パーソンの登録が完了しました。'),
-                          actionsPadding: EdgeInsets.all(16),
-                          actions: <Widget>[
-                            RaisedButton(
-                              child: Text('OK'),
-                              color: Colors.orange,
-                              textColor: Colors.white,
-                              onPressed: () {
-                                Navigator.pop(context);
-                                Navigator.pop(context);
-                              },
-                            ),
-                          ],
-                        );
-                      });
+                  var _authenticatedError =
+                      await registerUser(nickName, email, password);
+                  if (_authenticatedError == '') {
+                    showDialog<int>(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text('朝活パーソンの登録が完了しました。'),
+                            actionsPadding: EdgeInsets.all(16),
+                            actions: <Widget>[
+                              RaisedButton(
+                                child: Text('OK'),
+                                color: Colors.orange,
+                                textColor: Colors.white,
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ],
+                          );
+                        });
+                  } else {
+                    Scaffold.of(context).showSnackBar(
+                        SnackBar(content: Text(_authenticatedError)));
+                  }
                 } else {
-                  Scaffold.of(context).showSnackBar(
-                      SnackBar(content: Text('朝活パーソンの登録が失敗しました。')));
+                  Scaffold.of(context)
+                      .showSnackBar(SnackBar(content: Text('入力内容を確認して下さい。')));
                 }
               },
             ),
