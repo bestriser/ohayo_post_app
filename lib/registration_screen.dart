@@ -175,7 +175,7 @@ class RegistrationFormState extends State<RegistrationForm> {
                       barrierDismissible: false,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: Text('朝活パーソンの登録が完了しました！\n朝活仲間ができて嬉しいです！'),
+                          title: Text('朝活パーソンの登録が完了しました！\n一緒に朝活を楽しみましょう！'),
                           actionsPadding: EdgeInsets.all(16),
                           actions: <Widget>[
                             RaisedButton(
