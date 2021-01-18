@@ -3,33 +3,33 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class AddUserScreen extends StatefulWidget {
+class SignUpScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return AddUserScreenState();
+    return SignUpScreenState();
   }
 }
 
-class AddUserScreenState extends State<AddUserScreen> {
+class SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('ユーザー登録画面'),
+        title: Text('朝活パーソン登録'),
       ),
-      body: AddUserForm(),
+      body: SignUpForm(),
     );
   }
 }
 
-class AddUserForm extends StatefulWidget {
+class SignUpForm extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return AddUserFormState();
+    return SignUpFormState();
   }
 }
 
-class AddUserFormState extends State<AddUserForm> {
+class SignUpFormState extends State<SignUpForm> {
   String nickName;
   String email;
   String password;
@@ -38,7 +38,7 @@ class AddUserFormState extends State<AddUserForm> {
 
   CollectionReference users = FirebaseFirestore.instance.collection('users');
 
-  Future<void> addUser(String nickName, String email, String password) {
+  Future<void> signUpUser(String nickName, String email, String password) {
     return users
         .add({
           'nickName': nickName,
@@ -147,19 +147,19 @@ class AddUserFormState extends State<AddUserForm> {
             const SizedBox(height: 16),
             RaisedButton(
               child: Text(
-                "ユーザー追加",
+                "ユーザー登録する",
               ),
               color: Colors.orange,
               textColor: Colors.white,
               onPressed: () {
                 if (_formKey.currentState.validate()) {
                   _formKey.currentState.save();
-                  Scaffold.of(context)
-                      .showSnackBar(SnackBar(content: Text('登録しました。')));
-                  return addUser(nickName, email, password);
+                  Scaffold.of(context).showSnackBar(
+                      SnackBar(content: Text('朝活パーソンの登録が完了しました。')));
+                  return signUpUser(nickName, email, password);
                 } else {
-                  Scaffold.of(context)
-                      .showSnackBar(SnackBar(content: Text('登録が失敗しました。')));
+                  Scaffold.of(context).showSnackBar(
+                      SnackBar(content: Text('朝活パーソンの登録が失敗しました。')));
                 }
               },
             ),

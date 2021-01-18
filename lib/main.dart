@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ohayo_post_app/add_user.dart';
+import 'package:ohayo_post_app/sign_up_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,7 +24,6 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
-
   final String title;
 
   @override
@@ -42,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void initializeFlutterFire() async {
+  void _initializeFlutterFire() async {
     try {
       await Firebase.initializeApp();
       setState(() {
@@ -57,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    initializeFlutterFire();
+    _initializeFlutterFire();
     super.initState();
   }
 
@@ -92,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => AddUserScreen(),
+                        builder: (context) => SignUpScreen(),
                       ),
                     );
                   },
