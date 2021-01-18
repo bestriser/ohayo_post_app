@@ -127,28 +127,29 @@ class LoginScreenFormState extends State<LoginScreenForm> {
               onPressed: () async {
                 if (_formKey.currentState.validate()) {
                   _formKey.currentState.save();
-                  var _authenticatedError = await login(email, password);
+                  String _authenticatedError = await login(email, password);
                   if (_authenticatedError == '') {
                     showDialog<int>(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text('朝活パーソンのログインが完了しました。'),
-                            actionsPadding: EdgeInsets.all(16),
-                            actions: <Widget>[
-                              RaisedButton(
-                                child: Text('OK'),
-                                color: Colors.orange,
-                                textColor: Colors.white,
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                  Navigator.pop(context);
-                                },
-                              ),
-                            ],
-                          );
-                        });
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('おかえりなさい！\nまた一緒に朝活を楽しみましょう！'),
+                          actionsPadding: EdgeInsets.all(16),
+                          actions: <Widget>[
+                            RaisedButton(
+                              child: Text('OK'),
+                              color: Colors.orange,
+                              textColor: Colors.white,
+                              onPressed: () {
+                                Navigator.pop(context);
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
                   } else {
                     Scaffold.of(context).showSnackBar(
                         SnackBar(content: Text(_authenticatedError)));

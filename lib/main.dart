@@ -36,7 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   bool _isInitialized = false;
   bool _initializedError = false;
-  bool _isSigned = false;
+  bool _isLoggedIn = false;
 
   void _incrementCounter() {
     setState(() => _counter++);
@@ -48,7 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
         setState(() => _isInitialized = true);
         FirebaseAuth.instance.authStateChanges().listen((User user) {
           if (user != null) {
-            setState(() => _isSigned = true);
+            setState(() => _isLoggedIn = true);
           }
         });
       });
@@ -57,13 +57,14 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  void _logout() async {
-    await FirebaseAuth.instance.signOut();
-    FirebaseAuth.instance.authStateChanges().listen((User user) {
-      if (user == null) {
-        setState(() => _isSigned = false);
-      }
-    });
+  Future<String> _logout() async {
+    String logoutError = '';
+    try {
+      await FirebaseAuth.instance.signOut();
+    } on FirebaseAuthException catch (e) {
+      logoutError = e.code;
+    }
+    return logoutError;
   }
 
   @override
@@ -84,7 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                _isSigned
+                _isLoggedIn
                     ? Column(
                         children: [
                           Text(
@@ -95,12 +96,56 @@ class _MyHomePageState extends State<MyHomePage> {
                             style: Theme.of(context).textTheme.headline4,
                           ),
                           RaisedButton(
-                            child: Text(
-                              'ログアウト',
-                            ),
+                            child: Text('ログアウト'),
                             color: Colors.orange,
                             textColor: Colors.white,
-                            onPressed: () => _logout(),
+                            onPressed: () async {
+                              String _logoutError = await _logout();
+                              if (_logoutError == '') {
+                                showDialog<int>(
+                                  context: context,
+                                  barrierDismissible: false,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text('ログアウトしました！'),
+                                      actionsPadding: EdgeInsets.all(16),
+                                      actions: <Widget>[
+                                        RaisedButton(
+                                          child: Text('OK'),
+                                          color: Colors.orange,
+                                          textColor: Colors.white,
+                                          onPressed: () async {
+                                            setState(() => _isLoggedIn = false);
+                                            Navigator.pop(context);
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              } else {
+                                showDialog<int>(
+                                  context: context,
+                                  barrierDismissible: false,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text(_logoutError),
+                                      actionsPadding: EdgeInsets.all(16),
+                                      actions: <Widget>[
+                                        RaisedButton(
+                                          child: Text('OK'),
+                                          color: Colors.orange,
+                                          textColor: Colors.white,
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              }
+                            },
                           ),
                         ],
                       )
@@ -108,9 +153,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           RaisedButton(
-                            child: Text(
-                              'ログイン',
-                            ),
+                            child: Text('ログイン'),
                             color: Colors.orange,
                             textColor: Colors.white,
                             onPressed: () {
@@ -124,9 +167,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                           const SizedBox(width: 16),
                           RaisedButton(
-                            child: Text(
-                              '登録',
-                            ),
+                            child: Text('登録'),
                             color: Colors.orange,
                             textColor: Colors.white,
                             onPressed: () {
@@ -145,13 +186,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   children: [
                     Text('_initialized: ${_isInitialized.toString()}'),
                     Text('_initializedError: ${_initializedError.toString()}'),
-                    Text('_isSigned: ${_isSigned.toString()}'),
+                    Text('_isLoggedIn: ${_isLoggedIn.toString()}'),
                   ],
                 ),
               ],
             ),
           ),
-          floatingActionButton: _isSigned
+          floatingActionButton: _isLoggedIn
               ? FloatingActionButton(
                   onPressed: _incrementCounter,
                   tooltip: 'Increment',

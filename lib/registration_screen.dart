@@ -167,29 +167,30 @@ class RegistrationFormState extends State<RegistrationForm> {
               onPressed: () async {
                 if (_formKey.currentState.validate()) {
                   _formKey.currentState.save();
-                  var _authenticatedError =
+                  String _authenticatedError =
                       await registerUser(nickName, email, password);
                   if (_authenticatedError == '') {
                     showDialog<int>(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text('朝活パーソンの登録が完了しました。'),
-                            actionsPadding: EdgeInsets.all(16),
-                            actions: <Widget>[
-                              RaisedButton(
-                                child: Text('OK'),
-                                color: Colors.orange,
-                                textColor: Colors.white,
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                  Navigator.pop(context);
-                                },
-                              ),
-                            ],
-                          );
-                        });
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('朝活パーソンの登録が完了しました！\n朝活仲間ができて嬉しいです！'),
+                          actionsPadding: EdgeInsets.all(16),
+                          actions: <Widget>[
+                            RaisedButton(
+                              child: Text('OK'),
+                              color: Colors.orange,
+                              textColor: Colors.white,
+                              onPressed: () {
+                                Navigator.pop(context);
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
                   } else {
                     Scaffold.of(context).showSnackBar(
                         SnackBar(content: Text(_authenticatedError)));
