@@ -46,7 +46,8 @@ class RegistrationFormState extends State<RegistrationForm> {
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
       await users
-          .add({
+          .doc(userCredential.user.uid)
+          .set({
             'uid': userCredential.user.uid,
             'nickName': nickName,
             'email': email,
