@@ -3,33 +3,33 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class LoginScreen extends StatefulWidget {
+class RegistrationScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return LoginScreenState();
+    return RegistrationScreenState();
   }
 }
 
-class LoginScreenState extends State<LoginScreen> {
+class RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('朝活パーソン登録'),
       ),
-      body: LoginForm(),
+      body: RegistrationForm(),
     );
   }
 }
 
-class LoginForm extends StatefulWidget {
+class RegistrationForm extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return LoginFormState();
+    return RegistrationFormState();
   }
 }
 
-class LoginFormState extends State<LoginForm> {
+class RegistrationFormState extends State<RegistrationForm> {
   String nickName;
   String email;
   String password;
@@ -38,15 +38,15 @@ class LoginFormState extends State<LoginForm> {
 
   CollectionReference users = FirebaseFirestore.instance.collection('users');
 
-  Future<void> loginUser(String nickName, String email, String password) {
+  Future<void> registerUser(String nickName, String email, String password) {
     return users
         .add({
           'nickName': nickName,
           'email': email,
           'password': password,
         })
-        .then((value) => print("User Added"))
-        .catchError((error) => print("Failed to add user: $error"));
+        .then((value) => print("Registered user"))
+        .catchError((error) => print("Failed to register user: $error"));
   }
 
   void _setNickName(String e) {
@@ -141,16 +141,34 @@ class LoginFormState extends State<LoginForm> {
             const SizedBox(height: 16),
             RaisedButton(
               child: Text(
-                "ユーザー登録する",
+                "登録する",
               ),
               color: Colors.orange,
               textColor: Colors.white,
               onPressed: () {
                 if (_formKey.currentState.validate()) {
                   _formKey.currentState.save();
-                  Scaffold.of(context).showSnackBar(
-                      SnackBar(content: Text('朝活パーソンの登録が完了しました。')));
-                  return loginUser(nickName, email, password);
+                  registerUser(nickName, email, password);
+                  showDialog<int>(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('朝活パーソンの登録が完了しました。'),
+                          actionsPadding: EdgeInsets.all(16),
+                          actions: <Widget>[
+                            RaisedButton(
+                              child: Text('OK'),
+                              color: Colors.orange,
+                              textColor: Colors.white,
+                              onPressed: () {
+                                Navigator.pop(context);
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ],
+                        );
+                      });
                 } else {
                   Scaffold.of(context).showSnackBar(
                       SnackBar(content: Text('朝活パーソンの登録が失敗しました。')));
