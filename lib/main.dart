@@ -41,9 +41,9 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() => _counter++);
   }
 
-  void _initializeFlutterFire() async {
+  void _initializeFlutterFire() {
     try {
-      await Firebase.initializeApp().whenComplete(() {
+      Firebase.initializeApp().whenComplete(() {
         setState(() => _isInitialized = true);
         FirebaseAuth.instance.authStateChanges().listen((User user) {
           if (user != null) {
@@ -54,6 +54,15 @@ class _MyHomePageState extends State<MyHomePage> {
     } catch (e) {
       setState(() => _initializedError = true);
     }
+  }
+
+  void _logout() async {
+    await FirebaseAuth.instance.signOut();
+    FirebaseAuth.instance.authStateChanges().listen((User user) {
+      if (user == null) {
+        setState(() => _isSigned = false);
+      }
+    });
   }
 
   @override
@@ -83,6 +92,14 @@ class _MyHomePageState extends State<MyHomePage> {
                           Text(
                             '$_counter',
                             style: Theme.of(context).textTheme.headline4,
+                          ),
+                          RaisedButton(
+                            child: Text(
+                              "ログアウト",
+                            ),
+                            color: Colors.orange,
+                            textColor: Colors.white,
+                            onPressed: () => _logout(),
                           ),
                         ],
                       )
