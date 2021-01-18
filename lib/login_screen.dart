@@ -1,36 +1,36 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class AddUserScreen extends StatefulWidget {
+class LoginScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return AddUserScreenState();
+    return LoginScreenState();
   }
 }
 
-class AddUserScreenState extends State<AddUserScreen> {
+class LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('ユーザー登録画面'),
+        title: Text('ログイン'),
       ),
-      body: AddUserForm(),
+      body: LoginScreenForm(),
     );
   }
 }
 
-class AddUserForm extends StatefulWidget {
+class LoginScreenForm extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return AddUserFormState();
+    return LoginScreenFormState();
   }
 }
 
-class AddUserFormState extends State<AddUserForm> {
-  String nickName;
+class LoginScreenFormState extends State<LoginScreenForm> {
   String email;
   String password;
 
@@ -38,33 +38,29 @@ class AddUserFormState extends State<AddUserForm> {
 
   CollectionReference users = FirebaseFirestore.instance.collection('users');
 
-  Future<void> addUser(String nickName, String email, String password) {
-    return users
-        .add({
-          'nickName': nickName,
-          'email': email,
-          'password': password,
-        })
-        .then((value) => print("User Added"))
-        .catchError((error) => print("Failed to add user: $error"));
-  }
-
-  void _setNickName(String e) {
-    setState(() {
-      nickName = e;
-    });
+  Future<String> login(String email, String password) async {
+    String authenticatedError = '';
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        authenticatedError = 'そのメールアドレスのユーザーは見つかりませんでした。';
+      } else if (e.code == 'wrong-password') {
+        authenticatedError = 'パスワードが間違っています。';
+      }
+    }
+    return authenticatedError;
   }
 
   void _setEmail(String e) {
-    setState(() {
-      email = e;
-    });
+    setState(() => email = e);
   }
 
   void _setPassword(String e) {
-    setState(() {
-      password = e;
-    });
+    setState(() => password = e);
   }
 
   @override
@@ -76,29 +72,6 @@ class AddUserFormState extends State<AddUserForm> {
         child: Column(
           children: [
             const SizedBox(height: 16),
-            TextFormField(
-              maxLines: 1,
-              maxLengthEnforced: false,
-              autofocus: true,
-              keyboardType: TextInputType.name,
-              textInputAction: TextInputAction.next,
-              validator: (value) {
-                if (value.isEmpty) {
-                  return 'ニックネームが入力されていません。';
-                }
-                if (value.length > 10) {
-                  return 'ニックネームが10文字を超えています。';
-                }
-                return null;
-              },
-              style: TextStyle(color: Colors.black),
-              decoration: const InputDecoration(
-                icon: Icon(Icons.face_outlined),
-                hintText: 'ニックネームを入力してください',
-                labelText: 'ニックネーム（10文字以内） *',
-              ),
-              onSaved: _setNickName,
-            ),
             TextFormField(
               maxLines: 1,
               maxLengthEnforced: false,
@@ -147,19 +120,43 @@ class AddUserFormState extends State<AddUserForm> {
             const SizedBox(height: 16),
             RaisedButton(
               child: Text(
-                "ユーザー追加",
+                'ログインする',
               ),
               color: Colors.orange,
               textColor: Colors.white,
-              onPressed: () {
+              onPressed: () async {
                 if (_formKey.currentState.validate()) {
                   _formKey.currentState.save();
-                  Scaffold.of(context)
-                      .showSnackBar(SnackBar(content: Text('登録しました。')));
-                  return addUser(nickName, email, password);
+                  String _authenticatedError = await login(email, password);
+                  if (_authenticatedError == '') {
+                    showDialog<int>(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('おかえりなさい！\nまた一緒に朝活を楽しみましょう！'),
+                          actionsPadding: EdgeInsets.all(16),
+                          actions: <Widget>[
+                            RaisedButton(
+                              child: Text('OK'),
+                              color: Colors.orange,
+                              textColor: Colors.white,
+                              onPressed: () {
+                                Navigator.pop(context);
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  } else {
+                    Scaffold.of(context).showSnackBar(
+                        SnackBar(content: Text(_authenticatedError)));
+                  }
                 } else {
                   Scaffold.of(context)
-                      .showSnackBar(SnackBar(content: Text('登録が失敗しました。')));
+                      .showSnackBar(SnackBar(content: Text('入力内容を確認して下さい。')));
                 }
               },
             ),
