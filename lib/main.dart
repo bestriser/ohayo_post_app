@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ohayo_post_app/login_screen.dart';
 import 'package:ohayo_post_app/registration_screen.dart';
 
 void main() {
@@ -95,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                           RaisedButton(
                             child: Text(
-                              "ログアウト",
+                              'ログアウト',
                             ),
                             color: Colors.orange,
                             textColor: Colors.white,
@@ -108,7 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         children: [
                           RaisedButton(
                             child: Text(
-                              "ログイン",
+                              'ログイン',
                             ),
                             color: Colors.orange,
                             textColor: Colors.white,
@@ -116,7 +117,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => RegistrationScreen(),
+                                  builder: (context) => LoginScreen(),
                                 ),
                               );
                             },
@@ -124,7 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           const SizedBox(width: 16),
                           RaisedButton(
                             child: Text(
-                              "登録",
+                              '登録',
                             ),
                             color: Colors.orange,
                             textColor: Colors.white,

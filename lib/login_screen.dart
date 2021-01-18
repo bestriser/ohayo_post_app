@@ -4,34 +4,33 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class RegistrationScreen extends StatefulWidget {
+class LoginScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return RegistrationScreenState();
+    return LoginScreenState();
   }
 }
 
-class RegistrationScreenState extends State<RegistrationScreen> {
+class LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('朝活パーソン登録'),
+        title: Text('ログイン'),
       ),
-      body: RegistrationForm(),
+      body: LoginScreenForm(),
     );
   }
 }
 
-class RegistrationForm extends StatefulWidget {
+class LoginScreenForm extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return RegistrationFormState();
+    return LoginScreenFormState();
   }
 }
 
-class RegistrationFormState extends State<RegistrationForm> {
-  String nickName;
+class LoginScreenFormState extends State<LoginScreenForm> {
   String email;
   String password;
 
@@ -39,37 +38,21 @@ class RegistrationFormState extends State<RegistrationForm> {
 
   CollectionReference users = FirebaseFirestore.instance.collection('users');
 
-  Future<String> registerUser(
-      String nickName, String email, String password) async {
+  Future<String> login(String email, String password) async {
     String authenticatedError = '';
     try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
-      await users
-          .add({
-            'uid': userCredential.user.uid,
-            'nickName': nickName,
-            'email': email,
-            'createAt': Timestamp.now(),
-          })
-          .then((value) => print('Registered user'))
-          .catchError((error) => print('Failed to register user: $error'));
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'invalid-email') {
-        authenticatedError = 'メールアドレスの形式が正しくありません。';
-      } else if (e.code == 'email-already-in-use') {
-        authenticatedError = 'そのメールアドレスのアカウントはすでに存在しています。';
-      } else {
-        authenticatedError = e.code;
+      if (e.code == 'user-not-found') {
+        authenticatedError = 'そのメールアドレスのユーザーは見つかりませんでした。';
+      } else if (e.code == 'wrong-password') {
+        authenticatedError = 'パスワードが間違っています。';
       }
-    } catch (e) {
-      print(e);
     }
     return authenticatedError;
-  }
-
-  void _setNickName(String e) {
-    setState(() => nickName = e);
   }
 
   void _setEmail(String e) {
@@ -89,29 +72,6 @@ class RegistrationFormState extends State<RegistrationForm> {
         child: Column(
           children: [
             const SizedBox(height: 16),
-            TextFormField(
-              maxLines: 1,
-              maxLengthEnforced: false,
-              autofocus: true,
-              keyboardType: TextInputType.name,
-              textInputAction: TextInputAction.next,
-              validator: (value) {
-                if (value.isEmpty) {
-                  return 'ニックネームが入力されていません。';
-                }
-                if (value.length > 10) {
-                  return 'ニックネームが10文字を超えています。';
-                }
-                return null;
-              },
-              style: TextStyle(color: Colors.black),
-              decoration: const InputDecoration(
-                icon: Icon(Icons.face_outlined),
-                hintText: 'ニックネームを入力してください',
-                labelText: 'ニックネーム（10文字以内） *',
-              ),
-              onSaved: _setNickName,
-            ),
             TextFormField(
               maxLines: 1,
               maxLengthEnforced: false,
@@ -160,22 +120,21 @@ class RegistrationFormState extends State<RegistrationForm> {
             const SizedBox(height: 16),
             RaisedButton(
               child: Text(
-                '登録する',
+                'ログインする',
               ),
               color: Colors.orange,
               textColor: Colors.white,
               onPressed: () async {
                 if (_formKey.currentState.validate()) {
                   _formKey.currentState.save();
-                  var _authenticatedError =
-                      await registerUser(nickName, email, password);
+                  var _authenticatedError = await login(email, password);
                   if (_authenticatedError == '') {
                     showDialog<int>(
                         context: context,
                         barrierDismissible: false,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            title: Text('朝活パーソンの登録が完了しました。'),
+                            title: Text('朝活パーソンのログインが完了しました。'),
                             actionsPadding: EdgeInsets.all(16),
                             actions: <Widget>[
                               RaisedButton(
