@@ -59,23 +59,26 @@ class FirebaseNotifier with ChangeNotifier, DiagnosticableTreeMixin {
         email: email,
         password: password,
       );
+      setLoginErrorMessage('');
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        _loginErrorMessage = 'そのメールアドレスのユーザーは見つかりませんでした。';
-        notifyListeners();
+        setLoginErrorMessage('そのメールアドレスのユーザーは見つかりませんでした。');
       } else if (e.code == 'wrong-password') {
-        _loginErrorMessage = 'パスワードが間違っています。';
-        notifyListeners();
+        setLoginErrorMessage('パスワードが間違っています。');
       }
+    } catch (e) {
+      setLoginErrorMessage(e);
     }
   }
 
   Future<void> logout() async {
     try {
       await FirebaseAuth.instance.signOut();
+      setLogoutErrorMessage('');
     } on FirebaseAuthException catch (e) {
-      _logoutErrorMessage = e.code;
-      notifyListeners();
+      setLogoutErrorMessage(e.code);
+    } catch (e) {
+      setLogoutErrorMessage(e);
     }
   }
 }
