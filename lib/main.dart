@@ -2,15 +2,21 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ohayo_post_app/counter.dart';
 import 'package:ohayo_post_app/login_screen.dart';
 import 'package:ohayo_post_app/registration_screen.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(MyApp());
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (_) => Counter()),
+  ], child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -33,14 +39,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
   bool _isInitialized = false;
   bool _initializedError = false;
   bool _isLoggedIn = false;
-
-  void _incrementCounter() {
-    setState(() => _counter++);
-  }
 
   void _initializeFlutterFire() {
     try {
@@ -92,7 +93,8 @@ class _MyHomePageState extends State<MyHomePage> {
                             'You have pushed the button this many times:',
                           ),
                           Text(
-                            '$_counter',
+                            '${context.watch<Counter>().count}',
+                            key: const Key('counterState'),
                             style: Theme.of(context).textTheme.headline4,
                           ),
                           RaisedButton(
@@ -194,7 +196,8 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           floatingActionButton: _isLoggedIn
               ? FloatingActionButton(
-                  onPressed: _incrementCounter,
+                  key: const Key('increment_floatingActionButton'),
+                  onPressed: () => context.read<Counter>().increment(),
                   tooltip: 'Increment',
                   child: Icon(Icons.add),
                 )
