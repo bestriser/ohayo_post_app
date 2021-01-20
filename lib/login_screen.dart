@@ -1,8 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:ohayo_post_app/firebase_notifier.dart';
+import 'package:ohayo_post_app/user_notifier.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
@@ -24,40 +25,13 @@ class LoginScreenForm extends StatefulWidget {
 }
 
 class LoginScreenFormState extends State<LoginScreenForm> {
-  String email;
-  String password;
-
   final _formKey = GlobalKey<FormState>();
-
-  CollectionReference users = FirebaseFirestore.instance.collection('users');
-
-  Future<String> login(String email, String password) async {
-    String authenticatedError = '';
-    try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        authenticatedError = 'そのメールアドレスのユーザーは見つかりませんでした。';
-      } else if (e.code == 'wrong-password') {
-        authenticatedError = 'パスワードが間違っています。';
-      }
-    }
-    return authenticatedError;
-  }
-
-  void _setEmail(String e) {
-    setState(() => email = e);
-  }
-
-  void _setPassword(String e) {
-    setState(() => password = e);
-  }
 
   @override
   Widget build(BuildContext context) {
+    final firebaseNtf = Provider.of<FirebaseNotifier>(context);
+    final userNtf = Provider.of<UserNotifier>(context);
+
     return Form(
       key: _formKey,
       child: Padding(
@@ -85,7 +59,7 @@ class LoginScreenFormState extends State<LoginScreenForm> {
                 hintText: 'メールアドレスを入力してください',
                 labelText: 'メールアドレス *',
               ),
-              onSaved: _setEmail,
+              onSaved: userNtf.setEmail,
             ),
             TextFormField(
               maxLines: 1,
@@ -108,7 +82,7 @@ class LoginScreenFormState extends State<LoginScreenForm> {
                 hintText: 'パスワードを入力してください',
                 labelText: 'パスワード（8文字以上） *',
               ),
-              onSaved: _setPassword,
+              onSaved: userNtf.setPassword,
             ),
             const SizedBox(height: 16),
             RaisedButton(
@@ -120,8 +94,9 @@ class LoginScreenFormState extends State<LoginScreenForm> {
               onPressed: () async {
                 if (_formKey.currentState.validate()) {
                   _formKey.currentState.save();
-                  String _authenticatedError = await login(email, password);
-                  if (_authenticatedError == '') {
+                  await firebaseNtf.login(userNtf.email, userNtf.password);
+                  firebaseNtf.setIsLoggedIn(true);
+                  if (firebaseNtf.loginErrorMessage == '') {
                     showDialog<int>(
                       context: context,
                       barrierDismissible: false,
@@ -145,11 +120,17 @@ class LoginScreenFormState extends State<LoginScreenForm> {
                     );
                   } else {
                     Scaffold.of(context).showSnackBar(
-                        SnackBar(content: Text(_authenticatedError)));
+                      SnackBar(
+                        content: Text(firebaseNtf.loginErrorMessage),
+                      ),
+                    );
                   }
                 } else {
-                  Scaffold.of(context)
-                      .showSnackBar(SnackBar(content: Text('入力内容を確認して下さい。')));
+                  Scaffold.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('入力内容を確認して下さい。'),
+                    ),
+                  );
                 }
               },
             ),
