@@ -13,6 +13,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final firebaseNtf = Provider.of<FirebaseNotifier>(context);
+    final counterNtf = Provider.of<CounterNotifier>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -29,7 +30,7 @@ class HomeScreen extends StatelessWidget {
                         'You have pushed the button this many times:',
                       ),
                       Text(
-                        '${context.watch<CounterNotifier>().count}',
+                        '${counterNtf.count}',
                         style: Theme.of(context).textTheme.headline4,
                       ),
                       RaisedButton(
@@ -125,7 +126,7 @@ class HomeScreen extends StatelessWidget {
       ),
       floatingActionButton: firebaseNtf.isLoggedIn
           ? FloatingActionButton(
-              onPressed: () => context.read<CounterNotifier>().increment(),
+              onPressed: () => counterNtf.increment(),
               tooltip: 'Increment',
               child: Icon(Icons.add),
             )
