@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:ohayo_post_app/app.dart';
 import 'package:ohayo_post_app/counter_notifier.dart';
 import 'package:ohayo_post_app/firebase_notifier.dart';
+import 'package:ohayo_post_app/user_notifier.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -44,14 +45,17 @@ void main() async {
         MultiProvider(
           providers: [
             ChangeNotifierProvider(
-              create: (_) => CounterNotifier(),
-            ),
-            ChangeNotifierProvider(
               create: (_) => FirebaseNotifier()
                 ..setIsInitialized(isInitialized)
                 ..setInitializedErrorMessage(initializedErrorMessage)
                 ..setIsLoggedIn(isLoggedIn)
                 ..setLoginErrorMessage(loginErrorMessage),
+            ),
+            ChangeNotifierProvider(
+              create: (_) => UserNotifier(),
+            ),
+            ChangeNotifierProvider(
+              create: (_) => CounterNotifier(),
             ),
           ],
           child: App(),
