@@ -4,14 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class RegistrationScreen extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return RegistrationScreenState();
-  }
-}
-
-class RegistrationScreenState extends State<RegistrationScreen> {
+class RegistrationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
