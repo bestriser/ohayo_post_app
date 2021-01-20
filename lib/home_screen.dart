@@ -1,43 +1,28 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ohayo_post_app/counter.dart';
+import 'package:ohayo_post_app/firebase_notifier.dart';
 import 'package:ohayo_post_app/login_screen.dart';
 import 'package:ohayo_post_app/registration_screen.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatefulWidget {
-  HomeScreen({this.title});
+class HomeScreen extends StatelessWidget {
+  HomeScreen(this.title);
   final String title;
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  bool _isLoggedIn = false;
-
-  Future<String> _logout() async {
-    String logoutError = '';
-    try {
-      await FirebaseAuth.instance.signOut();
-    } on FirebaseAuthException catch (e) {
-      logoutError = e.code;
-    }
-    return logoutError;
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final firebaseNtf = Provider.of<FirebaseNotifier>(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(title),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            _isLoggedIn
+            firebaseNtf.isLoggedIn
                 ? Column(
                     children: [
                       Text(
@@ -52,8 +37,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: Colors.orange,
                         textColor: Colors.white,
                         onPressed: () async {
-                          String _logoutError = await _logout();
-                          if (_logoutError == '') {
+                          await firebaseNtf.logout();
+                          if (firebaseNtf.logoutErrorMessage == '') {
                             showDialog<int>(
                               context: context,
                               barrierDismissible: false,
@@ -66,7 +51,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       child: Text('OK'),
                                       color: Colors.orange,
                                       textColor: Colors.white,
-                                      onPressed: () {
+                                      onPressed: () async {
+                                        firebaseNtf.setIsLoggedIn(false);
                                         Navigator.pop(context);
                                       },
                                     ),
@@ -80,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               barrierDismissible: false,
                               builder: (BuildContext context) {
                                 return AlertDialog(
-                                  title: Text(_logoutError),
+                                  title: Text(firebaseNtf.logoutErrorMessage),
                                   actionsPadding: EdgeInsets.all(16),
                                   actions: <Widget>[
                                     RaisedButton(
@@ -133,11 +119,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
             const SizedBox(height: 16),
-            Text('_isLoggedIn: ${_isLoggedIn.toString()}'),
+            Text('_isLoggedIn: ${firebaseNtf.isLoggedIn.toString()}'),
           ],
         ),
       ),
-      floatingActionButton: _isLoggedIn
+      floatingActionButton: firebaseNtf.isLoggedIn
           ? FloatingActionButton(
               onPressed: () => context.read<Counter>().increment(),
               tooltip: 'Increment',
