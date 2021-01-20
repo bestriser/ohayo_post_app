@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ohayo_post_app/counter.dart';
 import 'package:ohayo_post_app/firebase_notifier.dart';
 import 'package:ohayo_post_app/home_screen.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +8,8 @@ import 'package:provider/provider.dart';
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final firebaseNtf = Provider.of<FirebaseNotifier>(context);
+
     return MaterialApp(
       title: 'おはようポスト',
       theme: ThemeData(
@@ -18,14 +19,18 @@ class App extends StatelessWidget {
       home: FutureBuilder(
         future: Firebase.initializeApp(),
         builder: (context, snapshot) {
-          // エラー時
-          if (snapshot.hasError) {
+          // 「Firebase.initializeApp()」or「FirebaseAuth.instance()」のエラー
+          if (firebaseNtf.initializedErrorMessage.isNotEmpty ||
+              firebaseNtf.loginErrorMessage.isNotEmpty) {
             return Container(
               color: Colors.white,
               child: Center(
                 child: AlertDialog(
                   title: Text(
-                    'サーバーの接続中にエラーが発生しました...\nアプリを再起動して下さい！',
+                    'サーバーの接続中にエラーが発生しました...' +
+                        '\nアプリを再起動して下さい！' +
+                        '\ninitializedErrorMessage：[${firebaseNtf.initializedErrorMessage}]' +
+                        '\nloggedInErrorMessage：[${firebaseNtf.loginErrorMessage}]',
                     style: TextStyle(fontSize: 16),
                   ),
                 ),
@@ -34,18 +39,8 @@ class App extends StatelessWidget {
           }
 
           // Firebaseのinitializeの完了後
-          if (snapshot.connectionState == ConnectionState.done) {
-            return MultiProvider(
-              providers: [
-                ChangeNotifierProvider(
-                  create: (_) => Counter(),
-                ),
-                ChangeNotifierProvider(
-                  create: (_) => FirebaseNotifier()..checkLoggedIn(),
-                ),
-              ],
-              child: HomeScreen(title: 'おはようポスト'),
-            );
+          if (firebaseNtf.isInitialized) {
+            return HomeScreen('おはようポスト');
           }
 
           // Firebaseのinitializeの完了待ち
