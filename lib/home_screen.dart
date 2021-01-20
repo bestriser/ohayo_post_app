@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ohayo_post_app/counter.dart';
+import 'package:ohayo_post_app/counter_notifier.dart';
 import 'package:ohayo_post_app/firebase_notifier.dart';
 import 'package:ohayo_post_app/login_screen.dart';
 import 'package:ohayo_post_app/registration_screen.dart';
@@ -29,7 +29,7 @@ class HomeScreen extends StatelessWidget {
                         'You have pushed the button this many times:',
                       ),
                       Text(
-                        '${context.watch<Counter>().count}',
+                        '${context.watch<CounterNotifier>().count}',
                         style: Theme.of(context).textTheme.headline4,
                       ),
                       RaisedButton(
@@ -125,7 +125,7 @@ class HomeScreen extends StatelessWidget {
       ),
       floatingActionButton: firebaseNtf.isLoggedIn
           ? FloatingActionButton(
-              onPressed: () => context.read<Counter>().increment(),
+              onPressed: () => context.read<CounterNotifier>().increment(),
               tooltip: 'Increment',
               child: Icon(Icons.add),
             )
