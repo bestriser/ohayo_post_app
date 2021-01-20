@@ -15,8 +15,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -31,7 +29,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({this.title});
   final String title;
 
   @override
@@ -94,7 +92,6 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                           Text(
                             '${context.watch<Counter>().count}',
-                            key: const Key('counterState'),
                             style: Theme.of(context).textTheme.headline4,
                           ),
                           RaisedButton(
@@ -196,7 +193,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           floatingActionButton: _isLoggedIn
               ? FloatingActionButton(
-                  key: const Key('increment_floatingActionButton'),
                   onPressed: () => context.read<Counter>().increment(),
                   tooltip: 'Increment',
                   child: Icon(Icons.add),
