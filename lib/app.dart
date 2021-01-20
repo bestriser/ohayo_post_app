@@ -1,4 +1,3 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ohayo_post_app/firebase_notifier.dart';
@@ -16,9 +15,8 @@ class App extends StatelessWidget {
         primarySwatch: Colors.orange,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: FutureBuilder(
-        future: Firebase.initializeApp(),
-        builder: (context, snapshot) {
+      home: Builder(
+        builder: (context) {
           // 「Firebase.initializeApp()」or「FirebaseAuth.instance()」のエラー
           if (firebaseNtf.initializedErrorMessage.isNotEmpty ||
               firebaseNtf.loginErrorMessage.isNotEmpty) {
