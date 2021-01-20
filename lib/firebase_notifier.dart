@@ -14,6 +14,8 @@ class FirebaseNotifier with ChangeNotifier, DiagnosticableTreeMixin {
   String get loginErrorMessage => _loginErrorMessage;
   String _logoutErrorMessage = '';
   String get logoutErrorMessage => _logoutErrorMessage;
+  String _registrationErrorMessage = '';
+  String get registrationErrorMessage => _registrationErrorMessage;
 
   CollectionReference users = FirebaseFirestore.instance.collection('users');
 
@@ -26,6 +28,8 @@ class FirebaseNotifier with ChangeNotifier, DiagnosticableTreeMixin {
     properties.add(FlagProperty('isLoggedIn', value: isLoggedIn));
     properties.add(StringProperty('loginErrorMessage', loginErrorMessage));
     properties.add(StringProperty('logoutError', logoutErrorMessage));
+    properties.add(
+        StringProperty('registrationErrorMessage', registrationErrorMessage));
   }
 
   void setIsInitialized(bool isInitialized) {
@@ -51,6 +55,39 @@ class FirebaseNotifier with ChangeNotifier, DiagnosticableTreeMixin {
   void setLogoutErrorMessage(String logoutErrorMessage) {
     _logoutErrorMessage = logoutErrorMessage;
     notifyListeners();
+  }
+
+  void setRegistrationErrorMessage(String registrationErrorMessage) {
+    _registrationErrorMessage = registrationErrorMessage;
+    notifyListeners();
+  }
+
+  Future<void> register(String nickName, String email, String password) async {
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+      await users
+          .doc(userCredential.user.uid)
+          .set({
+            'uid': userCredential.user.uid,
+            'nickName': nickName,
+            'email': email,
+            'createAt': Timestamp.now(),
+          })
+          .then((value) => print('Registered user'))
+          .catchError((error) => print('Failed to register user: $error'));
+      setRegistrationErrorMessage('');
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'invalid-email') {
+        setRegistrationErrorMessage('メールアドレスの形式が正しくありません。');
+      } else if (e.code == 'email-already-in-use') {
+        setRegistrationErrorMessage('そのメールアドレスのアカウントはすでに存在しています。');
+      } else {
+        setRegistrationErrorMessage(e.code);
+      }
+    } catch (e) {
+      setRegistrationErrorMessage(e);
+    }
   }
 
   Future<void> login(String email, String password) async {
