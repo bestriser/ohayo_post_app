@@ -1,30 +1,30 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:ohayo_post_app/firebase_notifier.dart';
-import 'package:ohayo_post_app/user_notifier.dart';
+import 'package:ohayo_post_app/notifier/firebase_notifier.dart';
+import 'package:ohayo_post_app/notifier/user_notifier.dart';
 import 'package:provider/provider.dart';
 
-class LoginScreen extends StatelessWidget {
+class RegistrationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('ログイン'),
+        title: Text('朝活パーソン登録'),
       ),
-      body: LoginScreenForm(),
+      body: RegistrationForm(),
     );
   }
 }
 
-class LoginScreenForm extends StatefulWidget {
+class RegistrationForm extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return LoginScreenFormState();
+    return RegistrationFormState();
   }
 }
 
-class LoginScreenFormState extends State<LoginScreenForm> {
+class RegistrationFormState extends State<RegistrationForm> {
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -39,6 +39,29 @@ class LoginScreenFormState extends State<LoginScreenForm> {
         child: Column(
           children: [
             const SizedBox(height: 16),
+            TextFormField(
+              maxLines: 1,
+              maxLengthEnforced: false,
+              autofocus: true,
+              keyboardType: TextInputType.name,
+              textInputAction: TextInputAction.next,
+              validator: (value) {
+                if (value.isEmpty) {
+                  return 'ニックネームが入力されていません。';
+                }
+                if (value.length > 10) {
+                  return 'ニックネームが10文字を超えています。';
+                }
+                return null;
+              },
+              style: TextStyle(color: Colors.black),
+              decoration: const InputDecoration(
+                icon: Icon(Icons.face_outlined),
+                hintText: 'ニックネームを入力してください',
+                labelText: 'ニックネーム（10文字以内） *',
+              ),
+              onSaved: userNtf.setNickName,
+            ),
             TextFormField(
               maxLines: 1,
               maxLengthEnforced: false,
@@ -87,22 +110,23 @@ class LoginScreenFormState extends State<LoginScreenForm> {
             const SizedBox(height: 16),
             RaisedButton(
               child: Text(
-                'ログインする',
+                '登録する',
               ),
               color: Colors.orange,
               textColor: Colors.white,
               onPressed: () async {
                 if (_formKey.currentState.validate()) {
                   _formKey.currentState.save();
-                  await firebaseNtf.login(userNtf.email, userNtf.password);
+                  await firebaseNtf.register(
+                      userNtf.nickName, userNtf.email, userNtf.password);
                   firebaseNtf.setIsLoggedIn(true);
-                  if (firebaseNtf.loginErrorMessage == '') {
+                  if (firebaseNtf.registrationErrorMessage == '') {
                     showDialog<int>(
                       context: context,
                       barrierDismissible: false,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: Text('おかえりなさい！\nまた一緒に朝活を楽しみましょう！'),
+                          title: Text('朝活パーソンの登録が完了しました！\n一緒に朝活を楽しみましょう！'),
                           actionsPadding: EdgeInsets.all(16),
                           actions: <Widget>[
                             RaisedButton(
@@ -121,7 +145,7 @@ class LoginScreenFormState extends State<LoginScreenForm> {
                   } else {
                     Scaffold.of(context).showSnackBar(
                       SnackBar(
-                        content: Text(firebaseNtf.loginErrorMessage),
+                        content: Text(firebaseNtf.registrationErrorMessage),
                       ),
                     );
                   }

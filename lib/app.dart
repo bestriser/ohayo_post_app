@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ohayo_post_app/firebase_notifier.dart';
-import 'package:ohayo_post_app/home_screen.dart';
+import 'package:ohayo_post_app/notifier/firebase_notifier.dart';
+import 'package:ohayo_post_app/screen/home/home_screen.dart';
 import 'package:provider/provider.dart';
 
 class App extends StatelessWidget {

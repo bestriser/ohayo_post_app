@@ -4,9 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ohayo_post_app/app.dart';
-import 'package:ohayo_post_app/counter_notifier.dart';
-import 'package:ohayo_post_app/firebase_notifier.dart';
-import 'package:ohayo_post_app/user_notifier.dart';
+import 'package:ohayo_post_app/notifier/counter_notifier.dart';
+import 'package:ohayo_post_app/notifier/firebase_notifier.dart';
+import 'package:ohayo_post_app/notifier/user_notifier.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
