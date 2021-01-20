@@ -1,7 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ohayo_post_app/counter.dart';
+import 'package:ohayo_post_app/firebase_notifier.dart';
 import 'package:ohayo_post_app/home_screen.dart';
+import 'package:provider/provider.dart';
 
 class App extends StatelessWidget {
   @override
@@ -32,7 +35,17 @@ class App extends StatelessWidget {
 
           // Firebaseのinitializeの完了後
           if (snapshot.connectionState == ConnectionState.done) {
-            return HomeScreen(title: 'おはようポスト');
+            return MultiProvider(
+              providers: [
+                ChangeNotifierProvider(
+                  create: (_) => Counter(),
+                ),
+                ChangeNotifierProvider(
+                  create: (_) => FirebaseNotifier()..checkLoggedIn(),
+                ),
+              ],
+              child: HomeScreen(title: 'おはようポスト'),
+            );
           }
 
           // Firebaseのinitializeの完了待ち
