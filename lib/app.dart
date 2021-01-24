@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ohayo_post_app/notifier/firebase_notifier.dart';
-import 'package:ohayo_post_app/screen/home/home_screen.dart';
+import 'package:ohayo_post_app/screen/root/root_screen.dart';
 import 'package:provider/provider.dart';
 
 class App extends StatelessWidget {
@@ -46,7 +46,7 @@ class App extends StatelessWidget {
 
           // Firebaseのinitializeの完了後
           if (firebaseNtf.isInitialized) {
-            return HomeScreen('おはようポスト');
+            return RootScreen();
           }
 
           // Firebaseのinitializeの完了待ち

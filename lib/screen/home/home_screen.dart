@@ -58,17 +58,20 @@ class HomeScreen extends StatelessWidget {
       ),
       floatingActionButton: !firebaseNtf.isLoggedIn
           ? const SizedBox.shrink()
-          : FloatingActionButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => SendingScreen(),
-                  ),
-                );
-              },
-              tooltip: 'NavigatorPushSendingScreen',
-              child: Icon(Icons.add),
+          : Padding(
+              padding: const EdgeInsets.fromLTRB(0, 0, 5, 70),
+              child: FloatingActionButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SendingScreen(),
+                    ),
+                  );
+                },
+                tooltip: 'NavigatorPushSendingScreen',
+                child: Icon(Icons.add),
+              ),
             ),
     );
   }
