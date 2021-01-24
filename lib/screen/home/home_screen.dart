@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ohayo_post_app/notifier/firebase_notifier.dart';
 import 'package:ohayo_post_app/screen/login/login_screen.dart';
-import 'package:ohayo_post_app/screen/post/sending_screen.dart';
 import 'package:ohayo_post_app/screen/registration/registration_screen.dart';
 import 'package:ohayo_post_app/widget/logout_button.dart';
+import 'package:ohayo_post_app/widget/sending_floating_action_button.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -56,23 +56,7 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: !firebaseNtf.isLoggedIn
-          ? const SizedBox.shrink()
-          : Padding(
-              padding: const EdgeInsets.fromLTRB(0, 0, 5, 70),
-              child: FloatingActionButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SendingScreen(),
-                    ),
-                  );
-                },
-                tooltip: 'NavigatorPushSendingScreen',
-                child: Icon(Icons.add),
-              ),
-            ),
+      floatingActionButton: SendingFloatingActionButton(),
     );
   }
 }
