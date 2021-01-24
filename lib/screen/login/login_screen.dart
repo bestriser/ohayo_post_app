@@ -88,7 +88,6 @@ class LoginScreenFormState extends State<LoginScreenForm> {
                 'ログインする',
               ),
               color: Colors.orange,
-              textColor: Colors.white,
               onPressed: () async {
                 if (_formKey.currentState.validate()) {
                   _formKey.currentState.save();
@@ -106,7 +105,6 @@ class LoginScreenFormState extends State<LoginScreenForm> {
                             RaisedButton(
                               child: Text('OK'),
                               color: Colors.orange,
-                              textColor: Colors.white,
                               onPressed: () {
                                 Navigator.pop(context);
                                 Navigator.pop(context);

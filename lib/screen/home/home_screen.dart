@@ -34,7 +34,6 @@ class HomeScreen extends StatelessWidget {
                       RaisedButton(
                         child: Text('ログアウト'),
                         color: Colors.orange,
-                        textColor: Colors.white,
                         onPressed: () async {
                           await firebaseNtf.logout();
                           if (firebaseNtf.logoutErrorMessage == '') {
@@ -49,7 +48,6 @@ class HomeScreen extends StatelessWidget {
                                     RaisedButton(
                                       child: Text('OK'),
                                       color: Colors.orange,
-                                      textColor: Colors.white,
                                       onPressed: () async {
                                         firebaseNtf.setIsLoggedIn(false);
                                         Navigator.pop(context);
@@ -71,7 +69,6 @@ class HomeScreen extends StatelessWidget {
                                     RaisedButton(
                                       child: Text('OK'),
                                       color: Colors.orange,
-                                      textColor: Colors.white,
                                       onPressed: () {
                                         Navigator.pop(context);
                                       },
@@ -91,7 +88,6 @@ class HomeScreen extends StatelessWidget {
                       RaisedButton(
                         child: Text('ログイン'),
                         color: Colors.orange,
-                        textColor: Colors.white,
                         onPressed: () {
                           Navigator.push(
                             context,
@@ -105,7 +101,6 @@ class HomeScreen extends StatelessWidget {
                       RaisedButton(
                         child: Text('登録'),
                         color: Colors.orange,
-                        textColor: Colors.white,
                         onPressed: () {
                           Navigator.push(
                             context,

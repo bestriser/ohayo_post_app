@@ -107,11 +107,8 @@ class RegistrationFormState extends State<RegistrationForm> {
             ),
             const SizedBox(height: 16),
             RaisedButton(
-              child: Text(
-                '登録する',
-              ),
+              child: Text('登録する'),
               color: Colors.orange,
-              textColor: Colors.white,
               onPressed: () async {
                 if (_formKey.currentState.validate()) {
                   _formKey.currentState.save();
@@ -130,7 +127,6 @@ class RegistrationFormState extends State<RegistrationForm> {
                             RaisedButton(
                               child: Text('OK'),
                               color: Colors.orange,
-                              textColor: Colors.white,
                               onPressed: () {
                                 Navigator.pop(context);
                                 Navigator.pop(context);
