@@ -3,13 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:ohayo_post_app/widget/sending_floating_action_button.dart';
 
 class TimeLineScreen extends StatelessWidget {
-  TimeLineScreen(this.title);
-  final String title;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(title)),
+      appBar: AppBar(title: Text('タイムライン')),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

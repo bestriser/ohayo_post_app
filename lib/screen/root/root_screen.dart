@@ -74,7 +74,7 @@ class RootScreen extends StatelessWidget {
                   return CupertinoTabView(
                     builder: (context) {
                       return CupertinoPageScaffold(
-                        child: TimeLineScreen('タイムライン'), // 表示したい画面のWidget
+                        child: TimeLineScreen(), // 表示したい画面のWidget
                       );
                     },
                   );
@@ -82,7 +82,7 @@ class RootScreen extends StatelessWidget {
                   return CupertinoTabView(
                     builder: (context) {
                       return CupertinoPageScaffold(
-                        child: AnalysisScreen('分析'), // 表示したい画面のWidget
+                        child: AnalysisScreen(), // 表示したい画面のWidget
                       );
                     },
                   );
@@ -90,7 +90,7 @@ class RootScreen extends StatelessWidget {
                   return CupertinoTabView(
                     builder: (context) {
                       return CupertinoPageScaffold(
-                        child: MyPageScreen('自分'), // 表示したい画面のWidget
+                        child: MyPageScreen(), // 表示したい画面のWidget
                       );
                     },
                   );
