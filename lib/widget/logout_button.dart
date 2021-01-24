@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ohayo_post_app/notifier/firebase_notifier.dart';
+import 'package:ohayo_post_app/screen/root/root_screen.dart';
 import 'package:provider/provider.dart';
 
 class LogoutButton extends StatelessWidget {
@@ -28,7 +29,12 @@ class LogoutButton extends StatelessWidget {
                         color: Colors.orange,
                         onPressed: () async {
                           firebaseNtf.setIsLoggedIn(false);
-                          Navigator.pop(context);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => RootScreen(),
+                            ),
+                          );
                         },
                       ),
                     ],
