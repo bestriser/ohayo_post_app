@@ -38,7 +38,10 @@ void main() async {
     loginErrorMessage = e;
   }
 
-  // iOS,androidともに縦向き固定
+  // Androidのナビゲーションバーのみ表示(ステータスバーは非表示)
+  SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
+
+  // iOS,Androidともに縦向き固定
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
     (_) {
       runApp(
