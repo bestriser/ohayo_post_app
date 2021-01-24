@@ -9,10 +9,7 @@ class RegistrationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('朝活パーソン登録'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: Text('朝活パーソン登録')),
       body: RegistrationForm(),
     );
   }

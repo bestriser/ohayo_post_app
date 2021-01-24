@@ -16,10 +16,7 @@ class HomeScreen extends StatelessWidget {
     final counterNtf = Provider.of<CounterNotifier>(context);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: Text(title)),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

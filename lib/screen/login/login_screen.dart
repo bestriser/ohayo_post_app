@@ -9,10 +9,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('ログイン'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: Text('ログイン')),
       body: LoginScreenForm(),
     );
   }
