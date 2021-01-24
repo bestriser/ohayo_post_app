@@ -15,6 +15,13 @@ class App extends StatelessWidget {
         primarySwatch: Colors.orange,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
+      // DynamicTypeを無効
+      builder: (BuildContext context, Widget child) {
+        return MediaQuery(
+          data: MediaQuery.of(context).copyWith(textScaleFactor: 1),
+          child: child,
+        );
+      },
       home: Builder(
         builder: (context) {
           // 「Firebase.initializeApp()」or「FirebaseAuth.instance()」のエラー
