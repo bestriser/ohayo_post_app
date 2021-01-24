@@ -16,17 +16,13 @@ class HomeScreen extends StatelessWidget {
     final firebaseNtf = Provider.of<FirebaseNotifier>(context);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-        actions: [],
-      ),
+      appBar: AppBar(title: Text(title)),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            firebaseNtf.isLoggedIn
-                ? LogoutButton()
-                : Row(
+            !firebaseNtf.isLoggedIn
+                ? Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       RaisedButton(
@@ -55,17 +51,25 @@ class HomeScreen extends StatelessWidget {
                         },
                       ),
                     ],
-                  ),
+                  )
+                : LogoutButton(),
           ],
         ),
       ),
-      floatingActionButton: firebaseNtf.isLoggedIn
-          ? FloatingActionButton(
-              onPressed: () => counterNtf.increment(),
-              tooltip: 'Increment',
+      floatingActionButton: !firebaseNtf.isLoggedIn
+          ? const SizedBox.shrink()
+          : FloatingActionButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SendingScreen(),
+                  ),
+                );
+              },
+              tooltip: 'NavigatorPushSendingScreen',
               child: Icon(Icons.add),
-            )
-          : const SizedBox.shrink(),
+            ),
     );
   }
 }
