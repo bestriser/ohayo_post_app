@@ -19,10 +19,7 @@ class SendingState extends State<SendingScreen> {
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           onPressed: () {
-            Navigator.popUntil(
-              context,
-              (Route<dynamic> route) => route.isFirst,
-            );
+            Navigator.pop(context);
           },
         ),
         actions: [
@@ -32,10 +29,7 @@ class SendingState extends State<SendingScreen> {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             onPressed: () {
-              Navigator.popUntil(
-                context,
-                (Route<dynamic> route) => route.isFirst,
-              );
+              Navigator.pop(context);
             },
           ),
         ],
