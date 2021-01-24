@@ -11,6 +11,7 @@ class RegistrationScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('朝活パーソン登録'),
+        centerTitle: true,
       ),
       body: RegistrationForm(),
     );

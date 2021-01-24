@@ -11,6 +11,7 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('ログイン'),
+        centerTitle: true,
       ),
       body: LoginScreenForm(),
     );
