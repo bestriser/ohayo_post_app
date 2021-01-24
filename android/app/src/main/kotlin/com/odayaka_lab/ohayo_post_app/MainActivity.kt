@@ -1,4 +1,4 @@
-package com.odayaka_publishing.ohayo_post_app
+package com.odayaka_lab.ohayo_post_app
 
 import io.flutter.embedding.android.FlutterActivity
 
