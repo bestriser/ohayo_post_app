@@ -7,8 +7,8 @@ import 'package:ohayo_post_app/widget/logout_button.dart';
 import 'package:ohayo_post_app/widget/sending_floating_action_button.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatelessWidget {
-  HomeScreen(this.title);
+class TimeLineScreen extends StatelessWidget {
+  TimeLineScreen(this.title);
   final String title;
 
   @override

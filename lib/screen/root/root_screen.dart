@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ohayo_post_app/screen/analysis/analysis_screen.dart';
-import 'package:ohayo_post_app/screen/home/home_screen.dart';
 import 'package:ohayo_post_app/screen/my_page/my_page_screen.dart';
+import 'package:ohayo_post_app/screen/time_line/time_line_screen.dart';
 
 class RootScreen extends StatelessWidget {
   @override
@@ -14,7 +14,7 @@ class RootScreen extends StatelessWidget {
             return CupertinoTabView(
               builder: (context) {
                 return CupertinoPageScaffold(
-                  child: HomeScreen('タイムライン'), // 表示したい画面のWidget
+                  child: TimeLineScreen('タイムライン'), // 表示したい画面のWidget
                 );
               },
             );
