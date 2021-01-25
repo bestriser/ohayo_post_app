@@ -17,6 +17,7 @@ void main() async {
   String initializedErrorMessage = '';
   bool isLoggedIn = false;
   String loginErrorMessage = '';
+  String firebaseUid = '';
 
   try {
     await Firebase.initializeApp();
@@ -29,6 +30,7 @@ void main() async {
     FirebaseAuth.instance.authStateChanges().listen(
       (User user) {
         if (user != null) {
+          firebaseUid = user.uid;
           return isLoggedIn = true;
         }
       },
@@ -54,7 +56,7 @@ void main() async {
                 ..setLoginErrorMessage(loginErrorMessage),
             ),
             ChangeNotifierProvider(
-              create: (_) => UserNotifier(),
+              create: (_) => UserNotifier()..getUser(firebaseUid),
             ),
           ],
           child: App(),

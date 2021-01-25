@@ -112,8 +112,8 @@ class RegistrationFormState extends State<RegistrationForm> {
               onPressed: () async {
                 if (_formKey.currentState.validate()) {
                   _formKey.currentState.save();
-                  await firebaseNtf.register(
-                      userNtf.nickName, userNtf.email, userNtf.password);
+                  await firebaseNtf.register(userNtf.user.nickName,
+                      userNtf.user.email, userNtf.password);
                   firebaseNtf.setIsLoggedIn(true);
                   if (firebaseNtf.registrationErrorMessage == '') {
                     showDialog<int>(
@@ -128,6 +128,7 @@ class RegistrationFormState extends State<RegistrationForm> {
                               child: Text('OK'),
                               color: Colors.orange,
                               onPressed: () {
+                                userNtf.setPassword('');
                                 Navigator.pop(context);
                                 Navigator.pop(context);
                               },

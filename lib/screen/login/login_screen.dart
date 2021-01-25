@@ -91,7 +91,7 @@ class LoginScreenFormState extends State<LoginScreenForm> {
               onPressed: () async {
                 if (_formKey.currentState.validate()) {
                   _formKey.currentState.save();
-                  await firebaseNtf.login(userNtf.email, userNtf.password);
+                  await firebaseNtf.login(userNtf.user.email, userNtf.password);
                   firebaseNtf.setIsLoggedIn(true);
                   if (firebaseNtf.loginErrorMessage == '') {
                     showDialog<int>(
@@ -106,6 +106,7 @@ class LoginScreenFormState extends State<LoginScreenForm> {
                               child: Text('OK'),
                               color: Colors.orange,
                               onPressed: () {
+                                userNtf.setPassword('');
                                 Navigator.pop(context);
                                 Navigator.pop(context);
                               },
