@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ohayo_post_app/notifier/post_notifier.dart';
+import 'package:provider/provider.dart';
 
 class SendingScreen extends StatefulWidget {
   @override
@@ -10,6 +12,8 @@ class SendingScreen extends StatefulWidget {
 class SendingState extends State<SendingScreen> {
   @override
   Widget build(BuildContext context) {
+    final postNtf = Provider.of<PostNotifier>(context);
+
     return Scaffold(
       appBar: AppBar(
         leadingWidth: 102,
@@ -28,7 +32,8 @@ class SendingState extends State<SendingScreen> {
               '投稿する',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            onPressed: () {
+            onPressed: () async {
+              await postNtf.submitPost();
               Navigator.pop(context);
             },
           ),
@@ -55,6 +60,7 @@ class SendingState extends State<SendingScreen> {
                         borderSide: BorderSide(style: BorderStyle.none),
                       ),
                     ),
+                    onChanged: postNtf.setTarget,
                   ),
                 ),
               ],

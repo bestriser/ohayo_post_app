@@ -5,13 +5,15 @@ class PostDataService {
   final FirebaseFirestore _storeDB = FirebaseFirestore.instance;
 
   Future<void> createPost(Post post) async {
+    final postId = _storeDB.collection('_').doc().id;
     final _postMap = {
       'contributorId': post.contributorId,
+      'postId': postId,
       'target': post.target,
       'createdAt': Timestamp.now(),
       'updatedAt': Timestamp.now(),
     };
-    _storeDB.collection('posts').doc().set(_postMap);
+    _storeDB.collection('posts').doc(postId).set(_postMap);
   }
 
   Stream<List<Post>> postStream(String firebaseUid) {
