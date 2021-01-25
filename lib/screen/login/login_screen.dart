@@ -28,7 +28,7 @@ class LoginScreenFormState extends State<LoginScreenForm> {
   @override
   Widget build(BuildContext context) {
     final firebaseNtf = Provider.of<FirebaseNotifier>(context);
-    final userNtf = Provider.of<PersonNotifier>(context);
+    final personNtf = Provider.of<PersonNotifier>(context);
 
     return Form(
       key: _formKey,
@@ -57,7 +57,7 @@ class LoginScreenFormState extends State<LoginScreenForm> {
                 hintText: 'メールアドレスを入力してください',
                 labelText: 'メールアドレス *',
               ),
-              onSaved: userNtf.setEmail,
+              onSaved: personNtf.setEmail,
             ),
             TextFormField(
               maxLines: 1,
@@ -80,7 +80,7 @@ class LoginScreenFormState extends State<LoginScreenForm> {
                 hintText: 'パスワードを入力してください',
                 labelText: 'パスワード（8文字以上） *',
               ),
-              onSaved: userNtf.setPassword,
+              onSaved: personNtf.setPassword,
             ),
             const SizedBox(height: 16),
             RaisedButton(
@@ -92,7 +92,7 @@ class LoginScreenFormState extends State<LoginScreenForm> {
                 if (_formKey.currentState.validate()) {
                   _formKey.currentState.save();
                   await firebaseNtf.login(
-                      userNtf.person.email, userNtf.password);
+                      personNtf.person.email, personNtf.password);
                   firebaseNtf.setIsLoggedIn(true);
                   if (firebaseNtf.loginErrorMessage == '') {
                     showDialog<int>(
@@ -107,7 +107,7 @@ class LoginScreenFormState extends State<LoginScreenForm> {
                               child: Text('OK'),
                               color: Colors.orange,
                               onPressed: () {
-                                userNtf.setPassword('');
+                                personNtf.setPassword('');
                                 Navigator.pop(context);
                                 Navigator.pop(context);
                               },
