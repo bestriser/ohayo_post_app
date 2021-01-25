@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 class MyPageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final userNtf = Provider.of<PersonNotifier>(context);
+    final personNtf = Provider.of<PersonNotifier>(context);
 
     return Scaffold(
       appBar: AppBar(title: Text('マイページ')),
@@ -15,9 +15,8 @@ class MyPageScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(userNtf.person.uid),
-            Text(userNtf.person.nickName),
-            Text(userNtf.person.email),
+            Text(personNtf.person.nickName),
+            Text(personNtf.person.email),
             LogoutButton(),
           ],
         ),
