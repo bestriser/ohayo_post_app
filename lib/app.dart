@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ohayo_post_app/model/person.dart';
+import 'package:ohayo_post_app/model/post.dart';
 import 'package:ohayo_post_app/notifier/firebase_notifier.dart';
 import 'package:ohayo_post_app/notifier/person_notifier.dart';
+import 'package:ohayo_post_app/notifier/post_notifier.dart';
 import 'package:ohayo_post_app/screen/root/root_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -11,12 +13,16 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     final firebaseNtf = Provider.of<FirebaseNotifier>(context);
     final person = Provider.of<Person>(context);
+    final posts = Provider.of<List<Post>>(context);
 
     /// FirebaseとStream以外のProviderを読み込む
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
           create: (_) => PersonNotifier.fromPerson(person),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => PostNotifier.fromPosts(posts),
         ),
       ],
       child: MaterialApp(

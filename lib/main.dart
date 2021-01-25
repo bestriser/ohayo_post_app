@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ohayo_post_app/app.dart';
 import 'package:ohayo_post_app/data_service/person_data_service.dart';
+import 'package:ohayo_post_app/data_service/post_data_service.dart';
 import 'package:ohayo_post_app/model/person.dart';
+import 'package:ohayo_post_app/model/post.dart';
 import 'package:ohayo_post_app/notifier/firebase_notifier.dart';
 import 'package:provider/provider.dart';
 
@@ -60,6 +62,10 @@ void main() async {
             StreamProvider<Person>.value(
               value: PersonDataService().personStream(firebaseUid),
               initialData: Person.empty(),
+            ),
+            StreamProvider<List<Post>>.value(
+              value: PostDataService().postStream(firebaseUid),
+              initialData: const <Post>[],
             ),
           ],
           child: App(),
