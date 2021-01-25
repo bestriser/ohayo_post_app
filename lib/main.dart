@@ -4,8 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ohayo_post_app/app.dart';
+import 'package:ohayo_post_app/data_service/person_data_service.dart';
+import 'package:ohayo_post_app/model/person.dart';
 import 'package:ohayo_post_app/notifier/firebase_notifier.dart';
-import 'package:ohayo_post_app/notifier/person_notifier.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -46,6 +47,7 @@ void main() async {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
     (_) {
       runApp(
+        /// FirebaseとStreamのProviderを読み込む
         MultiProvider(
           providers: [
             ChangeNotifierProvider(
@@ -55,8 +57,9 @@ void main() async {
                 ..setIsLoggedIn(isLoggedIn)
                 ..setLoginErrorMessage(loginErrorMessage),
             ),
-            ChangeNotifierProvider(
-              create: (_) => PersonNotifier(),
+            StreamProvider<Person>.value(
+              value: PersonDataService().personStream(firebaseUid),
+              initialData: Person.empty(),
             ),
           ],
           child: App(),
