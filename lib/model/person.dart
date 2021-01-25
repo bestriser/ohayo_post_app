@@ -41,7 +41,7 @@ class Person {
     );
   }
 
-  /// Firebaseにログインしていない時に使用する空のPersonを生成するメソッド
+  /// StreamのinitialData用のPersonを生成するメソッド
   factory Person.empty() {
     return Person(
       uid: '',
@@ -53,19 +53,17 @@ class Person {
   }
 
   /// FirestoreのDataをPersonモデルに変換するメソッド
-  factory Person.fromDocumentSnapshot(DocumentSnapshot doc) {
-    return doc.exists
-        ? Person(
-            uid: doc.data()['uid'] ?? '',
-            nickName: doc.data()['nickName'] ?? '',
-            email: doc.data()['email'] ?? '',
-            createAt: doc.data()['createAt'] != null
-                ? (doc.data()['createAt'] as Timestamp).toDate()
-                : null,
-            updateAt: doc.data()['updateAt'] != null
-                ? (doc.data()['updateAt'] as Timestamp).toDate()
-                : null,
-          )
-        : Person.empty();
+  factory Person.fromDocumentSnapshot(DocumentSnapshot snap) {
+    return Person(
+      uid: snap.data()['uid'] ?? '',
+      nickName: snap.data()['nickName'] ?? '',
+      email: snap.data()['email'] ?? '',
+      createAt: snap.data()['createAt'] != null
+          ? (snap.data()['createAt'] as Timestamp).toDate()
+          : null,
+      updateAt: snap.data()['updateAt'] != null
+          ? (snap.data()['updateAt'] as Timestamp).toDate()
+          : null,
+    );
   }
 }

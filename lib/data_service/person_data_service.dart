@@ -23,7 +23,6 @@ class PersonDataService {
   }
 
   Future<Person> getPerson(String uid) async {
-    if (uid.isEmpty) return Person.empty();
     final doc = await _storeDB.collection('persons').doc(uid).get();
     return Person.fromDocumentSnapshot(doc);
   }
