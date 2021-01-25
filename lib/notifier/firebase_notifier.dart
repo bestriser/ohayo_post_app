@@ -1,11 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:ohayo_post_app/data_service/person_data_service.dart';
 
 class FirebaseNotifier with ChangeNotifier, DiagnosticableTreeMixin {
-  final FirebaseFirestore _storeDB = FirebaseFirestore.instance;
-  final FirebaseAuth _authDB = FirebaseAuth.instance;
+  final _personDB = PersonDataService();
+  final _authDB = FirebaseAuth.instance;
   bool _isInitialized = false;
   bool get isInitialized => _isInitialized;
   String _initializedErrorMessage = '';
@@ -66,17 +66,7 @@ class FirebaseNotifier with ChangeNotifier, DiagnosticableTreeMixin {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
-      await _storeDB
-          .collection('persons')
-          .doc(userCredential.user.uid)
-          .set({
-            'uid': userCredential.user.uid,
-            'nickName': nickName,
-            'email': email,
-            'createAt': Timestamp.now(),
-          })
-          .then((value) => print('Registered user'))
-          .catchError((error) => print('Failed to register user: $error'));
+      await _personDB.createPerson(userCredential.user.uid, nickName, email);
       setRegistrationErrorMessage('');
     } on FirebaseAuthException catch (e) {
       if (e.code == 'invalid-email') {

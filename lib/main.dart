@@ -56,7 +56,7 @@ void main() async {
                 ..setLoginErrorMessage(loginErrorMessage),
             ),
             ChangeNotifierProvider(
-              create: (_) => PersonNotifier()..getPerson(firebaseUid),
+              create: (_) => PersonNotifier(),
             ),
           ],
           child: App(),
