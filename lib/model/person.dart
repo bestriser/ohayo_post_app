@@ -41,7 +41,7 @@ class Person {
     );
   }
 
-  /// StreamのinitialData用のPersonを生成するメソッド
+  /// StreamのinitialData用のPersonモデルを生成するメソッド
   factory Person.empty() {
     return Person(
       uid: '',

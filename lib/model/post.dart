@@ -53,6 +53,19 @@ class Post {
     );
   }
 
+  /// StreamやNotifierの初期化処理用のPostモデルを生成するメソッド
+  factory Post.empty() {
+    return Post(
+      contributorId: '',
+      postId: '',
+      sleepingRecords: null,
+      reflection: '',
+      target: '',
+      createdAt: null,
+      updatedAt: null,
+    );
+  }
+
   /// FirestoreのDataをPostモデルに変換するメソッド
   factory Post.fromDocumentSnapshot(DocumentSnapshot snap) {
     final data = snap.data();
