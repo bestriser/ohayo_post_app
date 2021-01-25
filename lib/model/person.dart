@@ -41,7 +41,7 @@ class Person {
     );
   }
 
-  /// Firebaseにログインしていない時に使用する空のUserを生成するメソッド
+  /// Firebaseにログインしていない時に使用する空のPersonを生成するメソッド
   factory Person.empty() {
     return Person(
       uid: '',
@@ -52,15 +52,19 @@ class Person {
     );
   }
 
-  /// FirestoreのDataをUserモデルに変換するメソッド
+  /// FirestoreのDataをPersonモデルに変換するメソッド
   factory Person.fromDocumentSnapshot(DocumentSnapshot doc) {
     return doc.exists
         ? Person(
-            uid: doc['uid'] ?? '',
-            nickName: doc['nickName'] ?? '',
-            email: doc['email'] ?? '',
-            createAt: doc['createAt'] ?? null,
-            updateAt: doc['updateAt'] ?? null,
+            uid: doc.data()['uid'] ?? '',
+            nickName: doc.data()['nickName'] ?? '',
+            email: doc.data()['email'] ?? '',
+            createAt: doc.data()['createAt'] != null
+                ? (doc.data()['createAt'] as Timestamp).toDate()
+                : null,
+            updateAt: doc.data()['updateAt'] != null
+                ? (doc.data()['updateAt'] as Timestamp).toDate()
+                : null,
           )
         : Person.empty();
   }
