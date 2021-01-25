@@ -14,10 +14,10 @@ class PersonDataService {
     _storeDB.collection('persons').doc(uid).set(_personMap);
   }
 
-  Stream<Person> personStream(String uid) {
+  Stream<Person> personStream(String firebaseUid) {
     return _storeDB
         .collection('persons')
-        .doc(uid)
+        .doc(firebaseUid)
         .snapshots()
         .map((DocumentSnapshot data) => Person.fromDocumentSnapshot(data));
   }
