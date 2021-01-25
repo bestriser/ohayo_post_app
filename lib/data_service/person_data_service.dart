@@ -23,8 +23,8 @@ class PersonDataService {
         .map((DocumentSnapshot data) => Person.fromDocumentSnapshot(data));
   }
 
-  Future<Person> getPerson(String uid) async {
-    final doc = await _storeDB.collection('persons').doc(uid).get();
-    return Person.fromDocumentSnapshot(doc);
+  Future<List<Person>> getAllPerson() async {
+    final snaps = await _storeDB.collection('persons').get();
+    return snaps.docs.map((e) => Person.fromDocumentSnapshot(e)).toList();
   }
 }

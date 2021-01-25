@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ohayo_post_app/model/person.dart';
 
 class Post {
   Post({
     this.contributorId,
+    this.contributorData,
     this.postId,
     this.sleepingRecords,
     this.reflection,
@@ -13,6 +15,9 @@ class Post {
 
   /// 投稿者ID
   final String contributorId;
+
+  /// 投稿者のニックネーム（Firestoreには保存しない）
+  final Person contributorData;
 
   /// ポストID
   final String postId;
@@ -35,6 +40,7 @@ class Post {
   /// 外部から値を代入するメソッド
   Post copyWith({
     String contributorId,
+    Person contributorData,
     String postId,
     Map<String, int> sleepingRecords,
     String reflection,
@@ -44,6 +50,7 @@ class Post {
   }) {
     return Post(
       contributorId: contributorId ?? this.contributorId,
+      contributorData: contributorData ?? this.contributorData,
       postId: postId ?? this.postId,
       sleepingRecords: sleepingRecords ?? this.sleepingRecords,
       reflection: reflection ?? this.reflection,
@@ -57,6 +64,7 @@ class Post {
   factory Post.empty() {
     return Post(
       contributorId: '',
+      contributorData: null,
       postId: '',
       sleepingRecords: null,
       reflection: '',

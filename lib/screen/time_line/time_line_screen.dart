@@ -10,31 +10,46 @@ class TimeLineScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final postNtf = Provider.of<PostNotifier>(context);
 
-    return Scaffold(
-      appBar: AppBar(title: Text('タイムライン')),
-      body: Center(
-        child: ListView.builder(
-          itemCount: postNtf.posts.length,
-          itemBuilder: (BuildContext context, int index) => Card(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('報告者：${postNtf.posts[index].contributorId}'),
-                  Text('今日の目標：${postNtf.posts[index].target}'),
-                  Text(
-                      '報告日：${Convert().getJapaneseDateFormat(postNtf.posts[index].createdAt)}'),
-                  Text(
-                      '更新日：${Convert().getJapaneseDateFormat(postNtf.posts[index].updatedAt)}'),
-                ],
+    return FutureBuilder(
+        future: postNtf.setContributorData(postNtf.posts),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          // postsとcontributorDataの紐付け完了
+          if (snapshot.connectionState == ConnectionState.done) {
+            return Scaffold(
+              appBar: AppBar(title: Text('タイムライン')),
+              body: Center(
+                child: ListView.builder(
+                  itemCount: postNtf.posts.length,
+                  itemBuilder: (BuildContext context, int index) => Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                              '報告者：${postNtf.posts[index].contributorData.nickName}'),
+                          Text('今日の目標：${postNtf.posts[index].target}'),
+                          Text(
+                              '報告日：${Convert().getJapaneseDateFormat(postNtf.posts[index].createdAt)}'),
+                          Text(
+                              '更新日：${Convert().getJapaneseDateFormat(postNtf.posts[index].updatedAt)}'),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
               ),
+              floatingActionButton: SendingFloatingActionButton(),
+            );
+          }
+          // postsとcontributorDataの紐付け待ち
+          return Center(
+            child: Container(
+              color: Colors.white,
+              child: CupertinoActivityIndicator(radius: 25),
             ),
-          ),
-        ),
-      ),
-      floatingActionButton: SendingFloatingActionButton(),
-    );
+          );
+        });
   }
 }
