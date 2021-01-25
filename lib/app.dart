@@ -18,11 +18,11 @@ class App extends StatelessWidget {
     /// FirebaseとStream以外のProviderを読み込む
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (_) => PersonNotifier.fromPerson(person),
+        ChangeNotifierProvider.value(
+          value: PersonNotifier.fromPerson(person),
         ),
-        ChangeNotifierProvider(
-          create: (_) => PostNotifier.fromPosts(posts),
+        ChangeNotifierProvider.value(
+          value: PostNotifier.fromPosts(posts),
         ),
       ],
       child: MaterialApp(
