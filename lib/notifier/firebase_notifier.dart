@@ -4,6 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class FirebaseNotifier with ChangeNotifier, DiagnosticableTreeMixin {
+  final FirebaseFirestore _storeDB = FirebaseFirestore.instance;
+  final FirebaseAuth _authDB = FirebaseAuth.instance;
   bool _isInitialized = false;
   bool get isInitialized => _isInitialized;
   String _initializedErrorMessage = '';
@@ -16,8 +18,6 @@ class FirebaseNotifier with ChangeNotifier, DiagnosticableTreeMixin {
   String get logoutErrorMessage => _logoutErrorMessage;
   String _registrationErrorMessage = '';
   String get registrationErrorMessage => _registrationErrorMessage;
-
-  CollectionReference users = FirebaseFirestore.instance.collection('users');
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -66,7 +66,8 @@ class FirebaseNotifier with ChangeNotifier, DiagnosticableTreeMixin {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
-      await users
+      await _storeDB
+          .collection('persons')
           .doc(userCredential.user.uid)
           .set({
             'uid': userCredential.user.uid,
@@ -92,7 +93,7 @@ class FirebaseNotifier with ChangeNotifier, DiagnosticableTreeMixin {
 
   Future<void> login(String email, String password) async {
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      await _authDB.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -110,7 +111,7 @@ class FirebaseNotifier with ChangeNotifier, DiagnosticableTreeMixin {
 
   Future<void> logout() async {
     try {
-      await FirebaseAuth.instance.signOut();
+      await _authDB.signOut();
       setLogoutErrorMessage('');
     } on FirebaseAuthException catch (e) {
       setLogoutErrorMessage(e.code);

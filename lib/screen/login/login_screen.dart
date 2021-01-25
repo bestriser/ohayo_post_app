@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ohayo_post_app/notifier/firebase_notifier.dart';
-import 'package:ohayo_post_app/notifier/user_notifier.dart';
+import 'package:ohayo_post_app/notifier/person_notifier.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -28,7 +28,7 @@ class LoginScreenFormState extends State<LoginScreenForm> {
   @override
   Widget build(BuildContext context) {
     final firebaseNtf = Provider.of<FirebaseNotifier>(context);
-    final userNtf = Provider.of<UserNotifier>(context);
+    final userNtf = Provider.of<PersonNotifier>(context);
 
     return Form(
       key: _formKey,
@@ -91,7 +91,8 @@ class LoginScreenFormState extends State<LoginScreenForm> {
               onPressed: () async {
                 if (_formKey.currentState.validate()) {
                   _formKey.currentState.save();
-                  await firebaseNtf.login(userNtf.user.email, userNtf.password);
+                  await firebaseNtf.login(
+                      userNtf.person.email, userNtf.password);
                   firebaseNtf.setIsLoggedIn(true);
                   if (firebaseNtf.loginErrorMessage == '') {
                     showDialog<int>(

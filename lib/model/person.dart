@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class User {
-  User({
+class Person {
+  Person({
     this.uid,
     this.nickName,
     this.email,
@@ -25,14 +25,14 @@ class User {
   final DateTime updateAt;
 
   /// 外部から値を代入するメソッド
-  User copyWith({
+  Person copyWith({
     String uid,
     String nickName,
     String email,
     DateTime createAt,
     DateTime updateAt,
   }) {
-    return User(
+    return Person(
       uid: uid ?? this.uid,
       nickName: nickName ?? this.nickName,
       email: email ?? this.email,
@@ -42,8 +42,8 @@ class User {
   }
 
   /// Firebaseにログインしていない時に使用する空のUserを生成するメソッド
-  factory User.empty() {
-    return User(
+  factory Person.empty() {
+    return Person(
       uid: '',
       nickName: '',
       email: '',
@@ -53,15 +53,15 @@ class User {
   }
 
   /// FirestoreのDataをUserモデルに変換するメソッド
-  factory User.fromDocumentSnapshot(DocumentSnapshot doc) {
+  factory Person.fromDocumentSnapshot(DocumentSnapshot doc) {
     return doc.exists
-        ? User(
+        ? Person(
             uid: doc['uid'] ?? '',
             nickName: doc['nickName'] ?? '',
             email: doc['email'] ?? '',
             createAt: doc['createAt'] ?? null,
             updateAt: doc['updateAt'] ?? null,
           )
-        : User.empty();
+        : Person.empty();
   }
 }

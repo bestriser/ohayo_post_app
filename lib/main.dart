@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ohayo_post_app/app.dart';
 import 'package:ohayo_post_app/notifier/firebase_notifier.dart';
-import 'package:ohayo_post_app/notifier/user_notifier.dart';
+import 'package:ohayo_post_app/notifier/person_notifier.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -56,7 +56,7 @@ void main() async {
                 ..setLoginErrorMessage(loginErrorMessage),
             ),
             ChangeNotifierProvider(
-              create: (_) => UserNotifier()..getUser(firebaseUid),
+              create: (_) => PersonNotifier()..getPerson(firebaseUid),
             ),
           ],
           child: App(),
