@@ -4,14 +4,14 @@ import 'package:ohayo_post_app/model/post.dart';
 class PostDataService {
   final FirebaseFirestore _storeDB = FirebaseFirestore.instance;
 
-  Future<void> createPost(String uid, String nickName, String email) async {
-    final _personMap = {
-      'uid': uid,
-      'nickName': nickName,
-      'email': email,
-      'createAt': Timestamp.now(),
+  Future<void> createPost(Post post) async {
+    final _postMap = {
+      'contributorId': post.contributorId,
+      'target': post.target,
+      'createdAt': Timestamp.now(),
+      'updatedAt': Timestamp.now(),
     };
-    _storeDB.collection('posts').doc(uid).set(_personMap);
+    _storeDB.collection('posts').doc().set(_postMap);
   }
 
   Stream<List<Post>> postStream(String firebaseUid) {
@@ -26,7 +26,7 @@ class PostDataService {
           return Post.fromDocumentSnapshot(doc);
         }).toList()
           // orderを使うとsnapshotsが0件になるためsort()で降順(新しい投稿順)にした
-          ..sort((a, b) => a.updateAt.compareTo(b.updateAt));
+          ..sort((a, b) => a.updatedAt.compareTo(b.updatedAt));
       },
     );
   }

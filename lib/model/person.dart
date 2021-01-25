@@ -5,8 +5,8 @@ class Person {
     this.uid,
     this.nickName,
     this.email,
-    this.createAt,
-    this.updateAt,
+    this.createdAt,
+    this.updatedAt,
   });
 
   /// uid
@@ -19,25 +19,25 @@ class Person {
   final String email;
 
   /// 登録日
-  final DateTime createAt;
+  final DateTime createdAt;
 
   /// 更新日
-  final DateTime updateAt;
+  final DateTime updatedAt;
 
   /// 外部から値を代入するメソッド
   Person copyWith({
     String uid,
     String nickName,
     String email,
-    DateTime createAt,
-    DateTime updateAt,
+    DateTime createdAt,
+    DateTime updatedAt,
   }) {
     return Person(
       uid: uid ?? this.uid,
       nickName: nickName ?? this.nickName,
       email: email ?? this.email,
-      createAt: createAt ?? this.createAt,
-      updateAt: updateAt ?? this.updateAt,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
     );
   }
 
@@ -47,8 +47,8 @@ class Person {
       uid: '',
       nickName: '',
       email: '',
-      createAt: null,
-      updateAt: null,
+      createdAt: null,
+      updatedAt: null,
     );
   }
 
@@ -59,11 +59,11 @@ class Person {
       uid: data['uid'] ?? '',
       nickName: data['nickName'] ?? '',
       email: data['email'] ?? '',
-      createAt: data['createAt'] != null
-          ? (data['createAt'] as Timestamp).toDate()
+      createdAt: data['createdAt'] != null
+          ? (data['createdAt'] as Timestamp).toDate()
           : null,
-      updateAt: data['updateAt'] != null
-          ? (snap.data()['updateAt'] as Timestamp).toDate()
+      updatedAt: data['updatedAt'] != null
+          ? (snap.data()['updatedAt'] as Timestamp).toDate()
           : null,
     );
   }

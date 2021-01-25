@@ -9,7 +9,8 @@ class PersonDataService {
       'uid': uid,
       'nickName': nickName,
       'email': email,
-      'createAt': Timestamp.now(),
+      'createdAt': Timestamp.now(),
+      'updatedAt': Timestamp.now(),
     };
     _storeDB.collection('persons').doc(uid).set(_personMap);
   }

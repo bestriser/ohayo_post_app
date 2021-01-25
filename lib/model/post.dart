@@ -7,8 +7,8 @@ class Post {
     this.sleepingRecords,
     this.reflection,
     this.target,
-    this.createAt,
-    this.updateAt,
+    this.createdAt,
+    this.updatedAt,
   });
 
   /// 投稿者ID
@@ -27,10 +27,10 @@ class Post {
   final String target;
 
   /// 登録日
-  final DateTime createAt;
+  final DateTime createdAt;
 
   /// 更新日
-  final DateTime updateAt;
+  final DateTime updatedAt;
 
   /// 外部から値を代入するメソッド
   Post copyWith({
@@ -39,8 +39,8 @@ class Post {
     Map<String, int> sleepingRecords,
     String reflection,
     String target,
-    DateTime createAt,
-    DateTime updateAt,
+    DateTime createdAt,
+    DateTime updatedAt,
   }) {
     return Post(
       contributorId: contributorId ?? this.contributorId,
@@ -48,8 +48,8 @@ class Post {
       sleepingRecords: sleepingRecords ?? this.sleepingRecords,
       reflection: reflection ?? this.reflection,
       target: target ?? this.target,
-      createAt: createAt ?? this.createAt,
-      updateAt: updateAt ?? this.updateAt,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
     );
   }
 
@@ -62,11 +62,11 @@ class Post {
       sleepingRecords: data['sleepingRecords'] ?? null,
       reflection: data['reflection'] ?? '',
       target: data['target'] ?? '',
-      createAt: data['createAt'] != null
-          ? (data['createAt'] as Timestamp).toDate()
+      createdAt: data['createdAt'] != null
+          ? (data['createdAt'] as Timestamp).toDate()
           : null,
-      updateAt: data['updateAt'] != null
-          ? (data['updateAt'] as Timestamp).toDate()
+      updatedAt: data['updatedAt'] != null
+          ? (data['updatedAt'] as Timestamp).toDate()
           : null,
     );
   }
