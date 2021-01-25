@@ -54,14 +54,15 @@ class Person {
 
   /// FirestoreのDataをPersonモデルに変換するメソッド
   factory Person.fromDocumentSnapshot(DocumentSnapshot snap) {
+    final data = snap.data();
     return Person(
-      uid: snap.data()['uid'] ?? '',
-      nickName: snap.data()['nickName'] ?? '',
-      email: snap.data()['email'] ?? '',
-      createAt: snap.data()['createAt'] != null
-          ? (snap.data()['createAt'] as Timestamp).toDate()
+      uid: data['uid'] ?? '',
+      nickName: data['nickName'] ?? '',
+      email: data['email'] ?? '',
+      createAt: data['createAt'] != null
+          ? (data['createAt'] as Timestamp).toDate()
           : null,
-      updateAt: snap.data()['updateAt'] != null
+      updateAt: data['updateAt'] != null
           ? (snap.data()['updateAt'] as Timestamp).toDate()
           : null,
     );
