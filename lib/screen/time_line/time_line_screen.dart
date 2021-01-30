@@ -1,3 +1,4 @@
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ohayo_post_app/notifier/post_notifier.dart';
@@ -22,18 +23,47 @@ class TimeLineScreen extends StatelessWidget {
                   itemCount: postNtf.posts.length,
                   itemBuilder: (BuildContext context, int index) => Card(
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(16),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                              '報告者：${postNtf.posts[index].contributorData.nickName}'),
-                          Text('今日の目標：${postNtf.posts[index].target}'),
-                          Text(
-                              '報告日：${Convert().getJapaneseDateFormat(postNtf.posts[index].createdAt)}'),
-                          Text(
-                              '更新日：${Convert().getJapaneseDateFormat(postNtf.posts[index].updatedAt)}'),
+                          Row(
+                            children: [
+                              SizedBox(
+                                height: 48,
+                                width: 48,
+                                child: Image.network(
+                                    'https://2.bp.blogspot.com/-RukBNDsJmYw/WD_cYZlBoSI/AAAAAAABAEs/'
+                                    'ddSv5AT9KgcVmt0RV9VewmNfvqOjETpMwCLcB/s300/sun_yellow2_character.png'),
+                              ),
+                              const SizedBox(width: 8),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                      '${postNtf.posts[index].contributorData.nickName}'),
+                                  Text(
+                                      '${Convert().getJapaneseDateFormat(postNtf.posts[index].createdAt)}'),
+                                ],
+                              ),
+                            ],
+                          ),
+                          Divider(thickness: 1, color: Colors.grey),
+                          Text('✨今日の目標✨'),
+                          const SizedBox(height: 8),
+                          DottedBorder(
+                            borderType: BorderType.RRect,
+                            radius: Radius.circular(12),
+                            padding: EdgeInsets.all(6),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8),
+                              child: Text('${postNtf.posts[index].target}'),
+                            ),
+                          ),
                         ],
                       ),
                     ),
