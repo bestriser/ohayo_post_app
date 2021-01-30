@@ -92,7 +92,9 @@ class LoginScreenFormState extends State<LoginScreenForm> {
                 if (_formKey.currentState.validate()) {
                   _formKey.currentState.save();
                   await firebaseNtf.login(
-                      personNtf.person.email, personNtf.password);
+                    personNtf.person.email,
+                    personNtf.password,
+                  );
                   firebaseNtf.setIsLoggedIn(true);
                   if (firebaseNtf.loginErrorMessage == '') {
                     showDialog<int>(

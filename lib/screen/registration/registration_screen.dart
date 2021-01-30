@@ -112,8 +112,11 @@ class RegistrationFormState extends State<RegistrationForm> {
               onPressed: () async {
                 if (_formKey.currentState.validate()) {
                   _formKey.currentState.save();
-                  await firebaseNtf.register(personNtf.person.nickName,
-                      personNtf.person.email, personNtf.password);
+                  await firebaseNtf.register(
+                    personNtf.person.nickName,
+                    personNtf.person.email,
+                    personNtf.password,
+                  );
                   firebaseNtf.setIsLoggedIn(true);
                   if (firebaseNtf.registrationErrorMessage == '') {
                     showDialog<int>(
