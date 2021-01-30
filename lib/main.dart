@@ -61,11 +61,9 @@ void main() async {
             ),
             StreamProvider<Person>.value(
               value: PersonDataService().personStream(firebaseUid),
-              initialData: Person.empty(),
             ),
             StreamProvider<List<Post>>.value(
               value: PostDataService().postStream(firebaseUid),
-              initialData: const <Post>[],
             ),
           ],
           child: App(),
