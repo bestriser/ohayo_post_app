@@ -19,56 +19,67 @@ class TimeLineScreen extends StatelessWidget {
             return Scaffold(
               appBar: AppBar(title: Text('タイムライン')),
               body: Center(
-                child: ListView.builder(
-                  itemCount: postNtf.posts.length,
-                  itemBuilder: (BuildContext context, int index) => Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              SizedBox(
-                                height: 48,
-                                width: 48,
-                                child: Image.network(
-                                    'https://2.bp.blogspot.com/-RukBNDsJmYw/WD_cYZlBoSI/AAAAAAABAEs/'
-                                    'ddSv5AT9KgcVmt0RV9VewmNfvqOjETpMwCLcB/s300/sun_yellow2_character.png'),
-                              ),
-                              const SizedBox(width: 8),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                      '${postNtf.posts[index].contributorData.nickName}'),
-                                  Text(
-                                      '${Convert().getJapaneseDateFormat(postNtf.posts[index].createdAt)}'),
-                                ],
-                              ),
-                            ],
-                          ),
-                          Divider(thickness: 1, color: Colors.grey),
-                          Text('✨今日の目標✨'),
-                          const SizedBox(height: 8),
-                          DottedBorder(
-                            borderType: BorderType.RRect,
-                            radius: Radius.circular(12),
-                            padding: EdgeInsets.all(6),
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8),
-                              child: Text('${postNtf.posts[index].target}'),
+                child: postNtf.posts.isEmpty
+                    ? Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Text(
+                          '右下の＋ボタンから\nおはようポストしてみよう',
+                          textAlign: TextAlign.center,
+                        ),
+                      )
+                    : ListView.builder(
+                        itemCount: postNtf.posts.length,
+                        itemBuilder: (BuildContext context, int index) => Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    SizedBox(
+                                      height: 48,
+                                      width: 48,
+                                      child: Image.network(
+                                          'https://2.bp.blogspot.com/-RukBNDsJmYw/WD_cYZlBoSI/AAAAAAABAEs/'
+                                          'ddSv5AT9KgcVmt0RV9VewmNfvqOjETpMwCLcB/s300/sun_yellow2_character.png'),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                            '${postNtf.posts[index].contributorData.nickName}'),
+                                        Text(
+                                            '${Convert().getJapaneseDateFormat(postNtf.posts[index].createdAt)}'),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                Divider(thickness: 1, color: Colors.grey),
+                                Text('✨今日の目標✨'),
+                                const SizedBox(height: 8),
+                                DottedBorder(
+                                  borderType: BorderType.RRect,
+                                  radius: Radius.circular(12),
+                                  padding: EdgeInsets.all(6),
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8),
+                                    child:
+                                        Text('${postNtf.posts[index].target}'),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
-                ),
               ),
               floatingActionButton: SendingFloatingActionButton(),
             );
