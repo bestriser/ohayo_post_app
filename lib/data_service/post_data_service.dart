@@ -29,7 +29,7 @@ class PostDataService {
           return Post.fromDocumentSnapshot(doc);
         }).toList()
           // orderを使うとsnapshotsが0件になるためsort()で降順(新しい投稿順)にした
-          ..sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
+          ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
       },
     );
   }
