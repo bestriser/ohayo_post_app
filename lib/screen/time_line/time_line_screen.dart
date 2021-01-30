@@ -18,6 +18,7 @@ class TimeLineScreen extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.done) {
             return Scaffold(
               appBar: AppBar(title: Text('タイムライン')),
+              floatingActionButton: PostingFloatingActionButton(),
               body: Center(
                 child: postNtf.posts.isEmpty
                     ? Padding(
@@ -81,7 +82,6 @@ class TimeLineScreen extends StatelessWidget {
                         ),
                       ),
               ),
-              floatingActionButton: PostingFloatingActionButton(),
             );
           }
           // postsとcontributorDataの紐付け待ち
