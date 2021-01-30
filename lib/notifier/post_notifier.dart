@@ -6,7 +6,11 @@ import 'package:ohayo_post_app/model/post.dart';
 
 class PostNotifier with ChangeNotifier {
   PostNotifier.fromPosts(List<Post> posts) {
-    _posts = posts;
+    if (posts != null) {
+      _posts = posts;
+    } else {
+      _posts = <Post>[];
+    }
   }
   List<Post> _posts;
   List<Post> get posts => _posts;
