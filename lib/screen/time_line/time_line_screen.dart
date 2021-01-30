@@ -56,7 +56,7 @@ class TimeLineScreen extends StatelessWidget {
                                         Text(
                                             '${postNtf.posts[index].contributorData.nickName}'),
                                         Text(
-                                            '${Convert().getJapaneseDateFormat(postNtf.posts[index].createdAt)}'),
+                                            '${Convert().getYearMonthDayWeekDayHourMinute(postNtf.posts[index].createdAt)}'),
                                       ],
                                     ),
                                   ],
