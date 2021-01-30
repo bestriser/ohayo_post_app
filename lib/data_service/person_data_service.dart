@@ -16,6 +16,7 @@ class PersonDataService {
   }
 
   Stream<Person> personStream(String firebaseUid) {
+    if (firebaseUid.isEmpty) return null;
     return _storeDB
         .collection('persons')
         .doc(firebaseUid)

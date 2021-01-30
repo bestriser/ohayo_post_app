@@ -17,6 +17,7 @@ class PostDataService {
   }
 
   Stream<List<Post>> postStream(String firebaseUid) {
+    if (firebaseUid.isEmpty) return null;
     final snaps = _storeDB
         .collection('posts')
         .where('contributorId', isEqualTo: firebaseUid)
