@@ -11,7 +11,7 @@ class AnalysisScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final postNtf = Provider.of<PostNotifier>(context);
     final posts = postNtf.posts
-      ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
+      ..sort((a, b) => a.createdAt.compareTo(b.createdAt));
     final wakeUpTimes = posts
         .map((post) => WakeUpTime(Convert().getMonthDayWeekDay(post.createdAt),
             Convert().getHourMinute(post.createdAt)))
