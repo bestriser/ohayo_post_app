@@ -2,16 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ohayo_post_app/notifier/firebase_notifier.dart';
-import 'package:ohayo_post_app/notifier/user_notifier.dart';
+import 'package:ohayo_post_app/notifier/person_notifier.dart';
+import 'package:ohayo_post_app/widget/restart_widget.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('ログイン'),
-      ),
+      appBar: AppBar(title: Text('ログイン')),
       body: LoginScreenForm(),
     );
   }
@@ -30,7 +29,7 @@ class LoginScreenFormState extends State<LoginScreenForm> {
   @override
   Widget build(BuildContext context) {
     final firebaseNtf = Provider.of<FirebaseNotifier>(context);
-    final userNtf = Provider.of<UserNotifier>(context);
+    final personNtf = Provider.of<PersonNotifier>(context);
 
     return Form(
       key: _formKey,
@@ -59,7 +58,7 @@ class LoginScreenFormState extends State<LoginScreenForm> {
                 hintText: 'メールアドレスを入力してください',
                 labelText: 'メールアドレス *',
               ),
-              onSaved: userNtf.setEmail,
+              onSaved: personNtf.setEmail,
             ),
             TextFormField(
               maxLines: 1,
@@ -82,7 +81,7 @@ class LoginScreenFormState extends State<LoginScreenForm> {
                 hintText: 'パスワードを入力してください',
                 labelText: 'パスワード（8文字以上） *',
               ),
-              onSaved: userNtf.setPassword,
+              onSaved: personNtf.setPassword,
             ),
             const SizedBox(height: 16),
             RaisedButton(
@@ -90,11 +89,13 @@ class LoginScreenFormState extends State<LoginScreenForm> {
                 'ログインする',
               ),
               color: Colors.orange,
-              textColor: Colors.white,
               onPressed: () async {
                 if (_formKey.currentState.validate()) {
                   _formKey.currentState.save();
-                  await firebaseNtf.login(userNtf.email, userNtf.password);
+                  await firebaseNtf.login(
+                    personNtf.person.email,
+                    personNtf.password,
+                  );
                   firebaseNtf.setIsLoggedIn(true);
                   if (firebaseNtf.loginErrorMessage == '') {
                     showDialog<int>(
@@ -108,10 +109,9 @@ class LoginScreenFormState extends State<LoginScreenForm> {
                             RaisedButton(
                               child: Text('OK'),
                               color: Colors.orange,
-                              textColor: Colors.white,
                               onPressed: () {
-                                Navigator.pop(context);
-                                Navigator.pop(context);
+                                personNtf.setPassword('');
+                                RestartWidget.restartApp(context);
                               },
                             ),
                           ],

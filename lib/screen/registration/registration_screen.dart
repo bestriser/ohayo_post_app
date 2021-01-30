@@ -2,16 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ohayo_post_app/notifier/firebase_notifier.dart';
-import 'package:ohayo_post_app/notifier/user_notifier.dart';
+import 'package:ohayo_post_app/notifier/person_notifier.dart';
+import 'package:ohayo_post_app/widget/restart_widget.dart';
 import 'package:provider/provider.dart';
 
 class RegistrationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('朝活パーソン登録'),
-      ),
+      appBar: AppBar(title: Text('朝活パーソン登録')),
       body: RegistrationForm(),
     );
   }
@@ -30,7 +29,7 @@ class RegistrationFormState extends State<RegistrationForm> {
   @override
   Widget build(BuildContext context) {
     final firebaseNtf = Provider.of<FirebaseNotifier>(context);
-    final userNtf = Provider.of<UserNotifier>(context);
+    final personNtf = Provider.of<PersonNotifier>(context);
 
     return Form(
       key: _formKey,
@@ -60,7 +59,7 @@ class RegistrationFormState extends State<RegistrationForm> {
                 hintText: 'ニックネームを入力してください',
                 labelText: 'ニックネーム（10文字以内） *',
               ),
-              onSaved: userNtf.setNickName,
+              onSaved: personNtf.setNickName,
             ),
             TextFormField(
               maxLines: 1,
@@ -82,7 +81,7 @@ class RegistrationFormState extends State<RegistrationForm> {
                 hintText: 'メールアドレスを入力してください',
                 labelText: 'メールアドレス *',
               ),
-              onSaved: userNtf.setEmail,
+              onSaved: personNtf.setEmail,
             ),
             TextFormField(
               maxLines: 1,
@@ -105,20 +104,20 @@ class RegistrationFormState extends State<RegistrationForm> {
                 hintText: 'パスワードを入力してください',
                 labelText: 'パスワード（8文字以上） *',
               ),
-              onSaved: userNtf.setPassword,
+              onSaved: personNtf.setPassword,
             ),
             const SizedBox(height: 16),
             RaisedButton(
-              child: Text(
-                '登録する',
-              ),
+              child: Text('登録する'),
               color: Colors.orange,
-              textColor: Colors.white,
               onPressed: () async {
                 if (_formKey.currentState.validate()) {
                   _formKey.currentState.save();
                   await firebaseNtf.register(
-                      userNtf.nickName, userNtf.email, userNtf.password);
+                    personNtf.person.nickName,
+                    personNtf.person.email,
+                    personNtf.password,
+                  );
                   firebaseNtf.setIsLoggedIn(true);
                   if (firebaseNtf.registrationErrorMessage == '') {
                     showDialog<int>(
@@ -132,10 +131,9 @@ class RegistrationFormState extends State<RegistrationForm> {
                             RaisedButton(
                               child: Text('OK'),
                               color: Colors.orange,
-                              textColor: Colors.white,
                               onPressed: () {
-                                Navigator.pop(context);
-                                Navigator.pop(context);
+                                personNtf.setPassword('');
+                                RestartWidget.restartApp(context);
                               },
                             ),
                           ],
