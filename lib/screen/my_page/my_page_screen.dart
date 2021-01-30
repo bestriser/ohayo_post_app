@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ohayo_post_app/notifier/person_notifier.dart';
 import 'package:ohayo_post_app/widget/logout_button.dart';
-import 'package:ohayo_post_app/widget/sending_floating_action_button.dart';
+import 'package:ohayo_post_app/widget/posting_floating_action_button.dart';
 import 'package:provider/provider.dart';
 
 class MyPageScreen extends StatelessWidget {
@@ -21,7 +21,7 @@ class MyPageScreen extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: SendingFloatingActionButton(),
+      floatingActionButton: PostingFloatingActionButton(),
     );
   }
 }

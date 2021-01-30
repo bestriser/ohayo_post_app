@@ -3,14 +3,14 @@ import 'package:ohayo_post_app/notifier/person_notifier.dart';
 import 'package:ohayo_post_app/notifier/post_notifier.dart';
 import 'package:provider/provider.dart';
 
-class SendingScreen extends StatefulWidget {
+class PostingScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return SendingState();
+    return PostingState();
   }
 }
 
-class SendingState extends State<SendingScreen> {
+class PostingState extends State<PostingScreen> {
   @override
   Widget build(BuildContext context) {
     final postNtf = Provider.of<PostNotifier>(context);

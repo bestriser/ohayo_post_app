@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ohayo_post_app/screen/post/sending_screen.dart';
+import 'package:ohayo_post_app/screen/post/posting_screen.dart';
 
-class SendingFloatingActionButton extends StatelessWidget {
+class PostingFloatingActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -11,11 +11,11 @@ class SendingFloatingActionButton extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => SendingScreen(),
+              builder: (context) => PostingScreen(),
             ),
           );
         },
-        tooltip: 'NavigatorPushSendingScreen',
+        tooltip: 'NavigatorPushPostingScreen',
         child: Icon(Icons.add),
       ),
     );

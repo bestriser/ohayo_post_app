@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ohayo_post_app/notifier/post_notifier.dart';
 import 'package:ohayo_post_app/utility/convert.dart';
-import 'package:ohayo_post_app/widget/sending_floating_action_button.dart';
+import 'package:ohayo_post_app/widget/posting_floating_action_button.dart';
 import 'package:provider/provider.dart';
 
 class TimeLineScreen extends StatelessWidget {
@@ -81,7 +81,7 @@ class TimeLineScreen extends StatelessWidget {
                         ),
                       ),
               ),
-              floatingActionButton: SendingFloatingActionButton(),
+              floatingActionButton: PostingFloatingActionButton(),
             );
           }
           // postsとcontributorDataの紐付け待ち
