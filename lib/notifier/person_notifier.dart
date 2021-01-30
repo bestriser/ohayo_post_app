@@ -3,7 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:ohayo_post_app/model/person.dart';
 
 class PersonNotifier with ChangeNotifier {
-  PersonNotifier.fromPerson(Person person) : _person = person;
+  PersonNotifier.fromPerson(Person person) {
+    if (person != null) {
+      _person = person;
+    } else {
+      _person = Person.empty();
+    }
+  }
   Person _person;
   Person get person => _person;
   String _password;
