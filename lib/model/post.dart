@@ -16,7 +16,7 @@ class Post {
   /// 投稿者ID
   final String contributorId;
 
-  /// 投稿者のニックネーム（Firestoreには保存しない）
+  /// 投稿者の情報（personsコレクションから受け取る）
   final Person contributorData;
 
   /// ポストID
