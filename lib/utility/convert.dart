@@ -5,7 +5,7 @@ class Convert {
   String getJapaneseDateFormat(DateTime dateTime) {
     initializeDateFormatting('ja');
     final yearMonthDayWeekDay = DateFormat.yMMMEd('ja').format(dateTime);
-    final hourMinute = DateFormat('hh:mm').format(dateTime);
+    final hourMinute = DateFormat.Hm('ja').format(dateTime);
     return yearMonthDayWeekDay + ' ' + hourMinute;
   }
 }
