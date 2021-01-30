@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ohayo_post_app/notifier/firebase_notifier.dart';
-import 'package:ohayo_post_app/screen/root/root_screen.dart';
+import 'package:ohayo_post_app/widget/restart_widget.dart';
 import 'package:provider/provider.dart';
 
 class LogoutButton extends StatelessWidget {
@@ -29,12 +29,7 @@ class LogoutButton extends StatelessWidget {
                         color: Colors.orange,
                         onPressed: () async {
                           firebaseNtf.setIsLoggedIn(false);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => RootScreen(),
-                            ),
-                          );
+                          RestartWidget.restartApp(context);
                         },
                       ),
                     ],
@@ -53,9 +48,7 @@ class LogoutButton extends StatelessWidget {
                       RaisedButton(
                         child: Text('OK'),
                         color: Colors.orange,
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
+                        onPressed: () => RestartWidget.restartApp(context),
                       ),
                     ],
                   );

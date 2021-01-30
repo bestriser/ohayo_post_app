@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ohayo_post_app/notifier/firebase_notifier.dart';
 import 'package:ohayo_post_app/notifier/person_notifier.dart';
+import 'package:ohayo_post_app/widget/restart_widget.dart';
 import 'package:provider/provider.dart';
 
 class RegistrationScreen extends StatelessWidget {
@@ -132,8 +133,7 @@ class RegistrationFormState extends State<RegistrationForm> {
                               color: Colors.orange,
                               onPressed: () {
                                 personNtf.setPassword('');
-                                Navigator.pop(context);
-                                Navigator.pop(context);
+                                RestartWidget.restartApp(context);
                               },
                             ),
                           ],
