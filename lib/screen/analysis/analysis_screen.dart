@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ohayo_post_app/model/wake_up_time.dart';
+import 'package:ohayo_post_app/notifier/person_notifier.dart';
 import 'package:ohayo_post_app/notifier/post_notifier.dart';
 import 'package:ohayo_post_app/utility/convert.dart';
 import 'package:ohayo_post_app/widget/posting_floating_action_button.dart';
@@ -16,6 +17,7 @@ class AnalysisScreen extends StatelessWidget {
         .map((post) => WakeUpTime(Convert().getMonthDayWeekDay(post.createdAt),
             Convert().getHourMinute(post.createdAt)))
         .toList();
+    final personNtf = Provider.of<PersonNotifier>(context);
 
     return Scaffold(
       appBar: AppBar(title: Text('分析')),
@@ -29,7 +31,7 @@ class AnalysisScreen extends StatelessWidget {
             child: SfCartesianChart(
               primaryXAxis: CategoryAxis(),
               // Chart title
-              title: ChartTitle(text: '起床時間'),
+              title: ChartTitle(text: '${personNtf.person.nickName}さんの起床時間'),
               // Enable legend
               legend: Legend(isVisible: true),
               // Enable tooltip
