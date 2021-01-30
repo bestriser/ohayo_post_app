@@ -31,20 +31,21 @@ class AnalysisScreen extends StatelessWidget {
             child: SfCartesianChart(
               primaryXAxis: CategoryAxis(),
               // Chart title
-              title: ChartTitle(text: '${personNtf.person.nickName}さんの起床時間'),
+              title: ChartTitle(text: '${personNtf.person.nickName}さんの睡眠分析'),
               // Enable legend
               legend: Legend(isVisible: true),
               // Enable tooltip
               tooltipBehavior: TooltipBehavior(enable: true),
               series: <LineSeries<WakeUpTime, String>>[
                 LineSeries<WakeUpTime, String>(
-                    dataSource: wakeUpTimes,
-                    xValueMapper: (WakeUpTime wakeUpTimes, _) =>
-                        wakeUpTimes.label.toString(),
-                    yValueMapper: (WakeUpTime wakeUpTimes, _) =>
-                        wakeUpTimes.time,
-                    // Enable data label
-                    dataLabelSettings: DataLabelSettings(isVisible: true))
+                  name: '起床時間',
+                  dataSource: wakeUpTimes,
+                  xValueMapper: (WakeUpTime wakeUpTimes, _) =>
+                      wakeUpTimes.label.toString(),
+                  yValueMapper: (WakeUpTime wakeUpTimes, _) => wakeUpTimes.time,
+                  // Enable data label
+                  dataLabelSettings: DataLabelSettings(isVisible: true),
+                ),
               ],
             ),
           ),
