@@ -73,7 +73,7 @@ class TimeLineScreen extends StatelessWidget {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 8),
                                     child:
-                                        Text('${postNtf.posts[index].target}'),
+                                        Text('${postNtf.posts[index].feeling}'),
                                   ),
                                 ),
                               ],

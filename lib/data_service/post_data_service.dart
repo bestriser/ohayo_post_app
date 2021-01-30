@@ -9,7 +9,7 @@ class PostDataService {
     final _postMap = {
       'contributorId': post.contributorId,
       'postId': postId,
-      'target': post.target,
+      'target': post.feeling,
       'createdAt': Timestamp.now(),
       'updatedAt': Timestamp.now(),
     };
