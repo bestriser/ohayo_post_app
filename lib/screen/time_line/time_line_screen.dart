@@ -61,7 +61,7 @@ class TimeLineScreen extends StatelessWidget {
                                   ],
                                 ),
                                 Divider(thickness: 1, color: Colors.grey),
-                                Text('✨今日の目標✨'),
+                                Text('✨ 今朝の気持ち ✨'),
                                 const SizedBox(height: 8),
                                 DottedBorder(
                                   borderType: BorderType.RRect,
