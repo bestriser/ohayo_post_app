@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ohayo_post_app/notifier/person_notifier.dart';
 import 'package:ohayo_post_app/notifier/post_notifier.dart';
 import 'package:provider/provider.dart';
 
@@ -13,6 +14,7 @@ class SendingState extends State<SendingScreen> {
   @override
   Widget build(BuildContext context) {
     final postNtf = Provider.of<PostNotifier>(context);
+    final personNtf = Provider.of<PersonNotifier>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -33,7 +35,7 @@ class SendingState extends State<SendingScreen> {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             onPressed: () async {
-              await postNtf.submitPost();
+              await postNtf.submitPost(personNtf.person.uid);
               Navigator.pop(context);
             },
           ),

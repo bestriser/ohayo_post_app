@@ -25,8 +25,8 @@ class PostNotifier with ChangeNotifier {
   final _postDB = PostDataService();
   final _personDB = PersonDataService();
 
-  Future<void> submitPost() async {
-    _post = _post.copyWith(contributorId: posts[0].contributorId);
+  Future<void> submitPost(String contributorId) async {
+    _post = _post.copyWith(contributorId: contributorId);
     await _postDB.createPost(_post);
     notifyListeners();
   }
