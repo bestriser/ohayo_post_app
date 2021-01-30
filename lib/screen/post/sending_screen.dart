@@ -31,7 +31,7 @@ class SendingState extends State<SendingScreen> {
         actions: [
           FlatButton(
             child: Text(
-              '投稿する',
+              'ポストする',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             onPressed: () async {
@@ -53,7 +53,7 @@ class SendingState extends State<SendingScreen> {
                     maxLines: 12,
                     style: Theme.of(context).primaryTextTheme.bodyText2,
                     decoration: InputDecoration(
-                      hintText: 'おはよう報告を投稿しよう！',
+                      hintText: '今朝の気持ちをポストしよう！',
                       hintStyle: Theme.of(context).accentTextTheme.bodyText1,
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(style: BorderStyle.none),
