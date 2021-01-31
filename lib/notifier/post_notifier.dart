@@ -18,7 +18,7 @@ class PostNotifier with ChangeNotifier {
   Post get post => _post; // おはよう報告の下書き機能が実装する時に使用予定
 
   void setTarget(String target) {
-    _post = _post.copyWith(target: target);
+    _post = _post.copyWith(feeling: target);
     notifyListeners();
   }
 

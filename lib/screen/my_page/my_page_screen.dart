@@ -11,6 +11,7 @@ class MyPageScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(title: Text('マイページ')),
+      floatingActionButton: PostingFloatingActionButton(),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -21,7 +22,6 @@ class MyPageScreen extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: PostingFloatingActionButton(),
     );
   }
 }

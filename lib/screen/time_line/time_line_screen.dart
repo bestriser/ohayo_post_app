@@ -18,6 +18,7 @@ class TimeLineScreen extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.done) {
             return Scaffold(
               appBar: AppBar(title: Text('タイムライン')),
+              floatingActionButton: PostingFloatingActionButton(),
               body: Center(
                 child: postNtf.posts.isEmpty
                     ? Padding(
@@ -55,7 +56,7 @@ class TimeLineScreen extends StatelessWidget {
                                         Text(
                                             '${postNtf.posts[index].contributorData.nickName}'),
                                         Text(
-                                            '${Convert().getJapaneseDateFormat(postNtf.posts[index].createdAt)}'),
+                                            '${Convert().getYearMonthDayWeekDayHourMinute(postNtf.posts[index].createdAt)}'),
                                       ],
                                     ),
                                   ],
@@ -72,7 +73,7 @@ class TimeLineScreen extends StatelessWidget {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 8),
                                     child:
-                                        Text('${postNtf.posts[index].target}'),
+                                        Text('${postNtf.posts[index].feeling}'),
                                   ),
                                 ),
                               ],
@@ -81,7 +82,6 @@ class TimeLineScreen extends StatelessWidget {
                         ),
                       ),
               ),
-              floatingActionButton: PostingFloatingActionButton(),
             );
           }
           // postsとcontributorDataの紐付け待ち

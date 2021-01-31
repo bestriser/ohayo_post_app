@@ -8,6 +8,7 @@ class Post {
     this.postId,
     this.sleepingRecords,
     this.reflection,
+    this.feeling,
     this.target,
     this.createdAt,
     this.updatedAt,
@@ -28,6 +29,9 @@ class Post {
   /// 昨日の振り返り
   final String reflection;
 
+  /// 今朝の気持ち
+  final String feeling;
+
   /// 今日の目標
   final String target;
 
@@ -44,6 +48,7 @@ class Post {
     String postId,
     Map<String, int> sleepingRecords,
     String reflection,
+    String feeling,
     String target,
     DateTime createdAt,
     DateTime updatedAt,
@@ -54,6 +59,7 @@ class Post {
       postId: postId ?? this.postId,
       sleepingRecords: sleepingRecords ?? this.sleepingRecords,
       reflection: reflection ?? this.reflection,
+      feeling: feeling ?? this.feeling,
       target: target ?? this.target,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
@@ -68,6 +74,7 @@ class Post {
       postId: '',
       sleepingRecords: null,
       reflection: '',
+      feeling: '',
       target: '',
       createdAt: null,
       updatedAt: null,
@@ -82,6 +89,7 @@ class Post {
       postId: data['postId'] ?? '',
       sleepingRecords: data['sleepingRecords'] ?? null,
       reflection: data['reflection'] ?? '',
+      feeling: data['feeling'] ?? '',
       target: data['target'] ?? '',
       createdAt: data['createdAt'] != null
           ? (data['createdAt'] as Timestamp).toDate()
