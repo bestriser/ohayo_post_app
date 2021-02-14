@@ -32,4 +32,4 @@ Runner/GeneratedPluginRegistrant.*
 !default.perspectivev3
 
 # Firebase Setting
-**/GoogleService-Info**.plist
+GoogleService-Info*.plist
