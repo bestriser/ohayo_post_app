@@ -12,7 +12,6 @@ class LogoutButton extends StatelessWidget {
       children: [
         ElevatedButton(
           child: Text('ログアウト'),
-          style: ElevatedButton.styleFrom(primary: Colors.orange),
           onPressed: () async {
             await firebaseNtf.logout();
             if (firebaseNtf.logoutErrorMessage == '') {
@@ -26,7 +25,6 @@ class LogoutButton extends StatelessWidget {
                     actions: <Widget>[
                       ElevatedButton(
                         child: Text('OK'),
-                        style: ElevatedButton.styleFrom(primary: Colors.orange),
                         onPressed: () async {
                           firebaseNtf.setIsLoggedIn(false);
                           RestartWidget.restartApp(context);
@@ -47,7 +45,6 @@ class LogoutButton extends StatelessWidget {
                     actions: <Widget>[
                       ElevatedButton(
                         child: Text('OK'),
-                        style: ElevatedButton.styleFrom(primary: Colors.orange),
                         onPressed: () => RestartWidget.restartApp(context),
                       ),
                     ],

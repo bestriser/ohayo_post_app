@@ -39,7 +39,6 @@ class RootScreen extends StatelessWidget {
                   children: [
                     ElevatedButton(
                       child: Text('ログイン'),
-                      style: ElevatedButton.styleFrom(primary: Colors.orange),
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -52,7 +51,6 @@ class RootScreen extends StatelessWidget {
                     const SizedBox(width: 16),
                     ElevatedButton(
                       child: Text('登録'),
-                      style: ElevatedButton.styleFrom(primary: Colors.orange),
                       onPressed: () {
                         Navigator.push(
                           context,

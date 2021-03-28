@@ -106,7 +106,6 @@ class RegistrationFormState extends State<RegistrationForm> {
             const SizedBox(height: 16),
             ElevatedButton(
               child: Text('登録する'),
-              style: ElevatedButton.styleFrom(primary: Colors.orange),
               onPressed: () async {
                 if (_formKey.currentState.validate()) {
                   _formKey.currentState.save();
@@ -127,7 +126,6 @@ class RegistrationFormState extends State<RegistrationForm> {
                           actions: <Widget>[
                             ElevatedButton(
                               child: Text('OK'),
-                              style: ElevatedButton.styleFrom(primary: Colors.orange),
                               onPressed: () {
                                 personNtf.setPassword('');
                                 RestartWidget.restartApp(context);
