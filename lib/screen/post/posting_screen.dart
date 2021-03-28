@@ -19,7 +19,7 @@ class PostingState extends State<PostingScreen> {
     return Scaffold(
       appBar: AppBar(
         leadingWidth: 102,
-        leading: FlatButton(
+        leading: TextButton(
           child: Text(
             'キャンセル',
             style: TextStyle(fontWeight: FontWeight.bold),
@@ -29,7 +29,7 @@ class PostingState extends State<PostingScreen> {
           },
         ),
         actions: [
-          FlatButton(
+          TextButton(
             child: Text(
               'ポストする',
               style: TextStyle(fontWeight: FontWeight.bold),

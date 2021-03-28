@@ -29,6 +29,7 @@ class App extends StatelessWidget {
           primarySwatch: Colors.orange,
           visualDensity: VisualDensity.adaptivePlatformDensity,
           appBarTheme: AppBarTheme(centerTitle: true),
+          textButtonTheme: TextButtonThemeData(style: TextButton.styleFrom(primary: Colors.black)),
         ),
         // DynamicTypeを無効
         builder: (BuildContext context, Widget child) {
