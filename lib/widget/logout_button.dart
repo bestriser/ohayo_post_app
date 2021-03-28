@@ -10,9 +10,8 @@ class LogoutButton extends StatelessWidget {
 
     return Column(
       children: [
-        RaisedButton(
+        ElevatedButton(
           child: Text('ログアウト'),
-          color: Colors.orange,
           onPressed: () async {
             await firebaseNtf.logout();
             if (firebaseNtf.logoutErrorMessage == '') {
@@ -24,9 +23,8 @@ class LogoutButton extends StatelessWidget {
                     title: Text('ログアウトしました！'),
                     actionsPadding: EdgeInsets.all(16),
                     actions: <Widget>[
-                      RaisedButton(
+                      ElevatedButton(
                         child: Text('OK'),
-                        color: Colors.orange,
                         onPressed: () async {
                           firebaseNtf.setIsLoggedIn(false);
                           RestartWidget.restartApp(context);
@@ -45,9 +43,8 @@ class LogoutButton extends StatelessWidget {
                     title: Text(firebaseNtf.logoutErrorMessage),
                     actionsPadding: EdgeInsets.all(16),
                     actions: <Widget>[
-                      RaisedButton(
+                      ElevatedButton(
                         child: Text('OK'),
-                        color: Colors.orange,
                         onPressed: () => RestartWidget.restartApp(context),
                       ),
                     ],

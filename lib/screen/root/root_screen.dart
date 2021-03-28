@@ -37,9 +37,8 @@ class RootScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    RaisedButton(
+                    ElevatedButton(
                       child: Text('ログイン'),
-                      color: Colors.orange,
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -50,9 +49,8 @@ class RootScreen extends StatelessWidget {
                       },
                     ),
                     const SizedBox(width: 16),
-                    RaisedButton(
+                    ElevatedButton(
                       child: Text('登録'),
-                      color: Colors.orange,
                       onPressed: () {
                         Navigator.push(
                           context,
