@@ -104,9 +104,9 @@ class RegistrationFormState extends State<RegistrationForm> {
               onSaved: personNtf.setPassword,
             ),
             const SizedBox(height: 16),
-            RaisedButton(
+            ElevatedButton(
               child: Text('登録する'),
-              color: Colors.orange,
+              style: ElevatedButton.styleFrom(primary: Colors.orange),
               onPressed: () async {
                 if (_formKey.currentState.validate()) {
                   _formKey.currentState.save();
@@ -125,9 +125,9 @@ class RegistrationFormState extends State<RegistrationForm> {
                           title: Text('朝活パーソンの登録が完了しました！\n一緒に朝活を楽しみましょう！'),
                           actionsPadding: EdgeInsets.all(16),
                           actions: <Widget>[
-                            RaisedButton(
+                            ElevatedButton(
                               child: Text('OK'),
-                              color: Colors.orange,
+                              style: ElevatedButton.styleFrom(primary: Colors.orange),
                               onPressed: () {
                                 personNtf.setPassword('');
                                 RestartWidget.restartApp(context);

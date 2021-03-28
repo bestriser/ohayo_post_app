@@ -82,11 +82,9 @@ class LoginScreenFormState extends State<LoginScreenForm> {
               onSaved: personNtf.setPassword,
             ),
             const SizedBox(height: 16),
-            RaisedButton(
-              child: Text(
-                'ログインする',
-              ),
-              color: Colors.orange,
+            ElevatedButton(
+              child: Text('ログインする'),
+              style: ElevatedButton.styleFrom(primary: Colors.orange),
               onPressed: () async {
                 if (_formKey.currentState.validate()) {
                   _formKey.currentState.save();
@@ -104,9 +102,9 @@ class LoginScreenFormState extends State<LoginScreenForm> {
                           title: Text('おかえりなさい！\nまた一緒に朝活を楽しみましょう！'),
                           actionsPadding: EdgeInsets.all(16),
                           actions: <Widget>[
-                            RaisedButton(
+                            ElevatedButton(
                               child: Text('OK'),
-                              color: Colors.orange,
+                              style: ElevatedButton.styleFrom(primary: Colors.orange),
                               onPressed: () {
                                 personNtf.setPassword('');
                                 RestartWidget.restartApp(context);
