@@ -40,7 +40,6 @@ class LoginScreenFormState extends State<LoginScreenForm> {
             const SizedBox(height: 16),
             TextFormField(
               maxLines: 1,
-              maxLengthEnforced: false,
               keyboardType: TextInputType.emailAddress,
               textInputAction: TextInputAction.next,
               validator: (value) {
@@ -62,7 +61,6 @@ class LoginScreenFormState extends State<LoginScreenForm> {
             ),
             TextFormField(
               maxLines: 1,
-              maxLengthEnforced: false,
               keyboardType: TextInputType.visiblePassword,
               textInputAction: TextInputAction.done,
               obscureText: true,

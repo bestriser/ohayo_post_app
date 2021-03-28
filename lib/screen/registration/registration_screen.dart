@@ -40,7 +40,6 @@ class RegistrationFormState extends State<RegistrationForm> {
             const SizedBox(height: 16),
             TextFormField(
               maxLines: 1,
-              maxLengthEnforced: false,
               autofocus: true,
               keyboardType: TextInputType.name,
               textInputAction: TextInputAction.next,
@@ -63,7 +62,6 @@ class RegistrationFormState extends State<RegistrationForm> {
             ),
             TextFormField(
               maxLines: 1,
-              maxLengthEnforced: false,
               keyboardType: TextInputType.emailAddress,
               textInputAction: TextInputAction.next,
               validator: (value) {
@@ -85,7 +83,6 @@ class RegistrationFormState extends State<RegistrationForm> {
             ),
             TextFormField(
               maxLines: 1,
-              maxLengthEnforced: false,
               keyboardType: TextInputType.visiblePassword,
               textInputAction: TextInputAction.done,
               obscureText: true,
