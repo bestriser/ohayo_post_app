@@ -136,14 +136,14 @@ class RegistrationFormState extends State<RegistrationForm> {
                       },
                     );
                   } else {
-                    Scaffold.of(context).showSnackBar(
+                    ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(firebaseNtf.registrationErrorMessage),
                       ),
                     );
                   }
                 } else {
-                  Scaffold.of(context).showSnackBar(
+                  ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text('入力内容を確認して下さい。'),
                     ),

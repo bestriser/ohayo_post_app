@@ -113,14 +113,14 @@ class LoginScreenFormState extends State<LoginScreenForm> {
                       },
                     );
                   } else {
-                    Scaffold.of(context).showSnackBar(
+                    ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(firebaseNtf.loginErrorMessage),
                       ),
                     );
                   }
                 } else {
-                  Scaffold.of(context).showSnackBar(
+                  ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text('入力内容を確認して下さい。'),
                     ),
