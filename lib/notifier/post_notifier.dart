@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:ohayo_post_app/data_service/person_data_service.dart';
 import 'package:ohayo_post_app/data_service/post_data_service.dart';
 import 'package:ohayo_post_app/model/post.dart';
+import 'package:ohayo_post_app/model/wake_up_time.dart';
+import 'package:ohayo_post_app/utility/convert.dart';
 
 class PostNotifier with ChangeNotifier {
   PostNotifier.fromPosts(List<Post> posts) {
@@ -13,10 +15,16 @@ class PostNotifier with ChangeNotifier {
     }
   }
   List<Post> _posts;
-  List<Post> get ascendingPosts => _posts..sort((a, b) => a.createdAt.compareTo(b.createdAt));
-  List<Post> get descendingPosts => _posts..sort((a, b) => b.createdAt.compareTo(a.createdAt));
+  List<Post> get posts => _posts;
   Post _post = Post.empty();
   Post get post => _post; // おはよう報告の下書き機能が実装する時に使用予定
+
+  List<WakeUpTime> get wakeUpTimes {
+    final _ascendingPosts = _posts..sort((a, b) => a.createdAt.compareTo(b.createdAt));
+    return _ascendingPosts
+        .map((post) => WakeUpTime(Convert().getMonthDayWeekDay(post.createdAt), Convert().getHourMinute(post.createdAt)))
+        .toList();
+  }
 
   void setTarget(String target) {
     _post = _post.copyWith(feeling: target);

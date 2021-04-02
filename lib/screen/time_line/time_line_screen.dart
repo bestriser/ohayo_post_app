@@ -10,13 +10,12 @@ class TimeLineScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final postNtf = Provider.of<PostNotifier>(context);
-    final posts = postNtf.descendingPosts;
 
     return Scaffold(
       appBar: AppBar(title: Text('タイムライン')),
       floatingActionButton: PostingFloatingActionButton(),
       body: FutureBuilder(
-        future: postNtf.setContributorData(posts),
+        future: postNtf.setContributorData(postNtf.posts),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           // 「posts」の取得エラー
           if (snapshot.hasError) {
@@ -25,7 +24,7 @@ class TimeLineScreen extends StatelessWidget {
               child: Center(
                 child: AlertDialog(
                   title: Text(
-                    'サーバーの接続中にエラーが発生しました...\nアプリを再起動して下さい！\nposts：[$posts]',
+                    'サーバーの接続中にエラーが発生しました...\nアプリを再起動して下さい！\nposts：[${postNtf.posts}]',
                     style: TextStyle(fontSize: 16),
                   ),
                 ),
@@ -36,7 +35,7 @@ class TimeLineScreen extends StatelessWidget {
           // postsとcontributorDataの紐付け完了
           if (snapshot.connectionState == ConnectionState.done)
             return Center(
-              child: posts.isEmpty
+              child: postNtf.posts.isEmpty
                   ? Padding(
                       padding: const EdgeInsets.all(16),
                       child: Text(
@@ -45,7 +44,7 @@ class TimeLineScreen extends StatelessWidget {
                       ),
                     )
                   : ListView.builder(
-                      itemCount: posts.length,
+                      itemCount: postNtf.posts.length,
                       itemBuilder: (BuildContext context, int index) => Card(
                         child: Padding(
                           padding: const EdgeInsets.all(16),
@@ -66,8 +65,8 @@ class TimeLineScreen extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text('${posts[index].contributorData.nickName}'),
-                                      Text('${Convert().getYearMonthDayWeekDayHourMinute(posts[index].createdAt)}'),
+                                      Text('${postNtf.posts[index].contributorData.nickName}'),
+                                      Text('${Convert().getYearMonthDayWeekDayHourMinute(postNtf.posts[index].createdAt)}'),
                                     ],
                                   ),
                                 ],
@@ -82,7 +81,7 @@ class TimeLineScreen extends StatelessWidget {
                                 child: Container(
                                   width: MediaQuery.of(context).size.width,
                                   padding: const EdgeInsets.symmetric(horizontal: 8),
-                                  child: Text('${posts[index].feeling}'),
+                                  child: Text('${postNtf.posts[index].feeling}'),
                                 ),
                               ),
                             ],

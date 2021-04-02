@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:ohayo_post_app/model/wake_up_time.dart';
 import 'package:ohayo_post_app/notifier/person_notifier.dart';
 import 'package:ohayo_post_app/notifier/post_notifier.dart';
-import 'package:ohayo_post_app/utility/convert.dart';
 import 'package:ohayo_post_app/widget/posting_floating_action_button.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -11,9 +10,6 @@ class AnalysisScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final postNtf = Provider.of<PostNotifier>(context);
-    final wakeUpTimes = postNtf.ascendingPosts
-        .map((post) => WakeUpTime(Convert().getMonthDayWeekDay(post.createdAt), Convert().getHourMinute(post.createdAt)))
-        .toList();
     final personNtf = Provider.of<PersonNotifier>(context);
 
     return Scaffold(
@@ -36,7 +32,7 @@ class AnalysisScreen extends StatelessWidget {
               series: <LineSeries<WakeUpTime, String>>[
                 LineSeries<WakeUpTime, String>(
                   name: '起床時間',
-                  dataSource: wakeUpTimes,
+                  dataSource: postNtf.wakeUpTimes,
                   xValueMapper: (WakeUpTime wakeUpTimes, _) => wakeUpTimes.label.toString(),
                   yValueMapper: (WakeUpTime wakeUpTimes, _) => wakeUpTimes.time,
                   // Enable data label
