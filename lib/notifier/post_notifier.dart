@@ -25,6 +25,9 @@ class PostNotifier with ChangeNotifier {
       .map((post) => WakeUpTime(Convert().getMonthDayWeekDay(post.createdAt), Convert().getHourMinute(post.createdAt)))
       .toList();
 
+  double get averageWakeUpTimes =>
+      (wakeUpTimes.map((wakeUpTime) => wakeUpTime.time).reduce((value, element) => (value + element) / 2) * 10).round() / 10;
+
   void setDescendingPosts() {
     _posts = _posts..sort((a, b) => b.createdAt.compareTo(a.createdAt));
     notifyListeners();
