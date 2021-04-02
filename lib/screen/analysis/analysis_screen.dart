@@ -11,11 +11,8 @@ class AnalysisScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final postNtf = Provider.of<PostNotifier>(context);
-    final posts = postNtf.posts
-      ..sort((a, b) => a.createdAt.compareTo(b.createdAt));
-    final wakeUpTimes = posts
-        .map((post) => WakeUpTime(Convert().getMonthDayWeekDay(post.createdAt),
-            Convert().getHourMinute(post.createdAt)))
+    final wakeUpTimes = postNtf.ascendingPosts
+        .map((post) => WakeUpTime(Convert().getMonthDayWeekDay(post.createdAt), Convert().getHourMinute(post.createdAt)))
         .toList();
     final personNtf = Provider.of<PersonNotifier>(context);
 
@@ -40,8 +37,7 @@ class AnalysisScreen extends StatelessWidget {
                 LineSeries<WakeUpTime, String>(
                   name: '起床時間',
                   dataSource: wakeUpTimes,
-                  xValueMapper: (WakeUpTime wakeUpTimes, _) =>
-                      wakeUpTimes.label.toString(),
+                  xValueMapper: (WakeUpTime wakeUpTimes, _) => wakeUpTimes.label.toString(),
                   yValueMapper: (WakeUpTime wakeUpTimes, _) => wakeUpTimes.time,
                   // Enable data label
                   dataLabelSettings: DataLabelSettings(isVisible: true),
