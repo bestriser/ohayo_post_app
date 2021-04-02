@@ -23,15 +23,10 @@ class WakeUpTimesScreen extends StatelessWidget {
             width: MediaQuery.of(context).size.width * 0.9,
             child: SfCartesianChart(
               // X軸の設定
-              primaryXAxis: CategoryAxis(
-                title: AxisTitle(text: '報告日'),
-              ),
+              primaryXAxis: CategoryAxis(title: AxisTitle()),
 
               // Y軸の設定
-              primaryYAxis: NumericAxis(
-                title: AxisTitle(text: '起床時間'),
-                minimum: 3,
-              ),
+              primaryYAxis: NumericAxis(minimum: 3),
 
               // グラフの説明
               legend: Legend(isVisible: true),
@@ -39,7 +34,7 @@ class WakeUpTimesScreen extends StatelessWidget {
               // グラフを選択した時のメニュー
               tooltipBehavior: TooltipBehavior(
                 enable: true,
-                format: 'point.y時起',
+                format: 'point.x：point.y時起',
               ),
 
               // グラフをトラックした時の縦線
