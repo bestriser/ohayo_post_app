@@ -23,7 +23,7 @@ class AnalysisScreen extends StatelessWidget {
             width: MediaQuery.of(context).size.width * 0.9,
             child: SfCartesianChart(
               // X軸の設定
-              primaryXAxis: CategoryAxis(title: AxisTitle()),
+              primaryXAxis: CategoryAxis(),
 
               // Y軸の設定
               primaryYAxis: NumericAxis(minimum: 3),
