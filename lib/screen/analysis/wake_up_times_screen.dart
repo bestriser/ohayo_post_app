@@ -24,7 +24,7 @@ class WakeUpTimesScreen extends StatelessWidget {
             child: SfCartesianChart(
               primaryXAxis: CategoryAxis(),
               legend: Legend(isVisible: true), // グラフの説明
-              tooltipBehavior: TooltipBehavior(enable: true), // グラフを選択した時のメニュー
+              tooltipBehavior: TooltipBehavior(enable: true, format: 'point.y時起'), // グラフを選択した時のメニュー
               series: <LineSeries<WakeUpTime, String>>[
                 LineSeries<WakeUpTime, String>(
                   name: '起床時間',
@@ -36,7 +36,7 @@ class WakeUpTimesScreen extends StatelessWidget {
                   dataLabelSettings: DataLabelSettings(isVisible: false), // グラフ上の数字
                 ),
                 LineSeries<WakeUpTime, String>(
-                  name: '平均：${postNtf.averageWakeUpTimes}時起',
+                  name: '平均',
                   dataSource: postNtf.wakeUpTimes
                       .map((wakeUpTime) => WakeUpTime(
                             wakeUpTime.label,
