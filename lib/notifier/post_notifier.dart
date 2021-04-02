@@ -13,7 +13,8 @@ class PostNotifier with ChangeNotifier {
     }
   }
   List<Post> _posts;
-  List<Post> get posts => _posts;
+  List<Post> get ascendingPosts => _posts..sort((a, b) => a.createdAt.compareTo(b.createdAt));
+  List<Post> get descendingPosts => _posts..sort((a, b) => b.createdAt.compareTo(a.createdAt));
   Post _post = Post.empty();
   Post get post => _post; // おはよう報告の下書き機能が実装する時に使用予定
 
@@ -31,20 +32,16 @@ class PostNotifier with ChangeNotifier {
     notifyListeners();
   }
 
-  /// TODO:notifyListeners()を設置するとFutureBuilderが無限ループになるのでList<Post>をreturnしているけど、_postsが古くなってしまう可能性があるため、notifyListeners()をちゃんと発火させたい
-  /// TODO:現状、タイムライン画面を開く度に、全ポストと全ユーザーの紐付け処理が入っているので、データ量が増えた時に処理落ちする可能性があるので直したい
-  Future<List<Post>> setContributorData(List<Post> posts) async {
+  /// TODO:現状、タイムライン画面を開く度に、全ポストと全ユーザーの紐付け処理が入り、データ量が増えた時に処理落ちする可能性があるので、ポストの表示に20件制限を追加したい
+  Future<void> setContributorData(List<Post> posts) async {
     // StreamのinitialDataなどでpostsが空の場合は処理をスキップ
-    if (posts.isEmpty) return null;
+    if (posts.isEmpty) return;
 
     // 全ユーザーデータを取得
     final _persons = await _personDB.getAllPerson();
 
     // contributorDataの紐付が未完了のPostIDリストを作成
-    final _unspecifiedPostIds = _posts
-        .where((_post) => _post.contributorData == null)
-        .map((_post) => _post.postId)
-        .toList();
+    final _unspecifiedPostIds = _posts.where((_post) => _post.contributorData == null).map((_post) => _post.postId).toList();
 
     // contributorDataの紐付が全て完了している場合は処理をスキップ
     if (_unspecifiedPostIds.isEmpty) return null;
@@ -52,14 +49,11 @@ class PostNotifier with ChangeNotifier {
     // contributorDataの紐付処理
     _posts = _posts.map((_post) {
       // contributorDataの紐付が完了しているPostIdは処理をスキップ
-      //if (_unspecifiedPostIds.contains(_post.postId)) return _post;
-
-      final _contributorData =
-          _persons.firstWhere((_person) => _person.uid == _post.contributorId);
-
+      if (!_unspecifiedPostIds.contains(_post.postId)) return _post;
+      final _contributorData = _persons.firstWhere((_person) => _person.uid == _post.contributorId);
       return _post.copyWith(contributorData: _contributorData);
     }).toList();
 
-    return _posts;
+    notifyListeners();
   }
 }
