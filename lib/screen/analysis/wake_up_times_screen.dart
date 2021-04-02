@@ -17,12 +17,22 @@ class WakeUpTimesScreen extends StatelessWidget {
       floatingActionButton: PostingFloatingActionButton(),
       body: Center(
         child: Transform.translate(
-          offset: Offset(0, -70),
+          offset: Offset(-15, -50),
           child: Container(
             height: MediaQuery.of(context).size.height * 0.7,
             width: MediaQuery.of(context).size.width * 0.9,
             child: SfCartesianChart(
-              primaryXAxis: CategoryAxis(),
+              // X軸の設定
+              primaryXAxis: CategoryAxis(
+                title: AxisTitle(text: '報告日'),
+              ),
+
+              // Y軸の設定
+              primaryYAxis: NumericAxis(
+                title: AxisTitle(text: '起床時間'),
+                minimum: 3,
+              ),
+
               // グラフの説明
               legend: Legend(isVisible: true),
 
