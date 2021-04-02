@@ -31,14 +31,23 @@ class WakeUpTimesScreen extends StatelessWidget {
                   dataSource: postNtf.wakeUpTimes,
                   xValueMapper: (WakeUpTime wakeUpTimes, _) => wakeUpTimes.label.toString(),
                   yValueMapper: (WakeUpTime wakeUpTimes, _) => wakeUpTimes.time,
-                  dataLabelSettings: DataLabelSettings(isVisible: true), // グラフ上の数字
+                  sortFieldValueMapper: (WakeUpTime wakeUpTimes, _) => wakeUpTimes.reportAt,
+                  sortingOrder: SortingOrder.ascending,
+                  dataLabelSettings: DataLabelSettings(isVisible: false), // グラフ上の数字
                 ),
                 LineSeries<WakeUpTime, String>(
-                  name: '平均',
-                  dataSource:
-                      postNtf.wakeUpTimes.map((wakeUpTime) => WakeUpTime(wakeUpTime.label, postNtf.averageWakeUpTimes)).toList(),
+                  name: '平均：${postNtf.averageWakeUpTimes}時起',
+                  dataSource: postNtf.wakeUpTimes
+                      .map((wakeUpTime) => WakeUpTime(
+                            wakeUpTime.label,
+                            postNtf.averageWakeUpTimes,
+                            wakeUpTime.reportAt,
+                          ))
+                      .toList(),
                   xValueMapper: (WakeUpTime wakeUpTimes, _) => wakeUpTimes.label.toString(),
                   yValueMapper: (WakeUpTime wakeUpTimes, _) => wakeUpTimes.time,
+                  sortFieldValueMapper: (WakeUpTime wakeUpTimes, _) => wakeUpTimes.reportAt,
+                  sortingOrder: SortingOrder.ascending,
                   dataLabelSettings: DataLabelSettings(isVisible: false), // グラフ上の数字
                 ),
               ],

@@ -27,7 +27,7 @@ class AnalysisScreen extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Text('平均：${postNtf.averageWakeUpTimes}時'),
+                Text('平均：${postNtf.averageWakeUpTimes}時起'),
               ],
             ),
           ),
