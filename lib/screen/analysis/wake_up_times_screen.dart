@@ -23,18 +23,23 @@ class WakeUpTimesScreen extends StatelessWidget {
             width: MediaQuery.of(context).size.width * 0.9,
             child: SfCartesianChart(
               primaryXAxis: CategoryAxis(),
-              // グラフの説明
-              legend: Legend(isVisible: false),
-              // グラフを選択した時のメニュー
-              tooltipBehavior: TooltipBehavior(enable: true),
+              legend: Legend(isVisible: true), // グラフの説明
+              tooltipBehavior: TooltipBehavior(enable: true), // グラフを選択した時のメニュー
               series: <LineSeries<WakeUpTime, String>>[
                 LineSeries<WakeUpTime, String>(
                   name: '起床時間',
                   dataSource: postNtf.wakeUpTimes,
                   xValueMapper: (WakeUpTime wakeUpTimes, _) => wakeUpTimes.label.toString(),
                   yValueMapper: (WakeUpTime wakeUpTimes, _) => wakeUpTimes.time,
-                  // グラフ上の数字
-                  dataLabelSettings: DataLabelSettings(isVisible: true),
+                  dataLabelSettings: DataLabelSettings(isVisible: true), // グラフ上の数字
+                ),
+                LineSeries<WakeUpTime, String>(
+                  name: '平均',
+                  dataSource:
+                      postNtf.wakeUpTimes.map((wakeUpTime) => WakeUpTime(wakeUpTime.label, postNtf.averageWakeUpTimes)).toList(),
+                  xValueMapper: (WakeUpTime wakeUpTimes, _) => wakeUpTimes.label.toString(),
+                  yValueMapper: (WakeUpTime wakeUpTimes, _) => wakeUpTimes.time,
+                  dataLabelSettings: DataLabelSettings(isVisible: false), // グラフ上の数字
                 ),
               ],
             ),
