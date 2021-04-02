@@ -92,9 +92,11 @@ class TimeLineScreen extends StatelessWidget {
             );
 
           // postsとcontributorDataの紐付け待ち
-          return Container(
-            padding: const EdgeInsets.all(16),
-            color: Colors.white,
+          return Center(
+            child: Container(
+              color: Colors.white,
+              child: CupertinoActivityIndicator(radius: 25),
+            ),
           );
         },
       ),
