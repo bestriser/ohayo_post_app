@@ -14,16 +14,25 @@ class PostNotifier with ChangeNotifier {
       _posts = <Post>[];
     }
   }
-  List<Post> _posts;
-  List<Post> get posts => _posts;
+
   Post _post = Post.empty();
   Post get post => _post; // おはよう報告の下書き機能が実装する時に使用予定
 
-  List<WakeUpTime> get wakeUpTimes {
-    final _ascendingPosts = _posts..sort((a, b) => a.createdAt.compareTo(b.createdAt));
-    return _ascendingPosts
-        .map((post) => WakeUpTime(Convert().getMonthDayWeekDay(post.createdAt), Convert().getHourMinute(post.createdAt)))
-        .toList();
+  List<Post> _posts;
+  List<Post> get posts => _posts;
+
+  List<WakeUpTime> get wakeUpTimes => _posts
+      .map((post) => WakeUpTime(Convert().getMonthDayWeekDay(post.createdAt), Convert().getHourMinute(post.createdAt)))
+      .toList();
+
+  void setDescendingPosts() {
+    _posts = _posts..sort((a, b) => b.createdAt.compareTo(a.createdAt));
+    notifyListeners();
+  }
+
+  void setAscendingPosts() {
+    _posts = _posts..sort((a, b) => a.createdAt.compareTo(b.createdAt));
+    notifyListeners();
   }
 
   void setTarget(String target) {

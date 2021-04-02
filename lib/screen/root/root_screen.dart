@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ohayo_post_app/notifier/firebase_notifier.dart';
+import 'package:ohayo_post_app/notifier/post_notifier.dart';
 import 'package:ohayo_post_app/screen/analysis/analysis_screen.dart';
 import 'package:ohayo_post_app/screen/login/login_screen.dart';
 import 'package:ohayo_post_app/screen/my_page/my_page_screen.dart';
@@ -12,6 +13,7 @@ class RootScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final firebaseNtf = Provider.of<FirebaseNotifier>(context);
+    final postNtf = Provider.of<PostNotifier>(context);
 
     return !firebaseNtf.isLoggedIn
         ? Material(
@@ -97,6 +99,20 @@ class RootScreen extends StatelessWidget {
               }
             },
             tabBar: CupertinoTabBar(
+              onTap: (index) {
+                switch (index) {
+                  case 0:
+                    postNtf.setDescendingPosts();
+                    break;
+                  case 1:
+                    postNtf.setAscendingPosts();
+                    break;
+                  case 2:
+                    break;
+                  default:
+                    break;
+                }
+              },
               items: <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
                   icon: Icon(Icons.article_outlined),
