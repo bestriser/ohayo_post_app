@@ -23,8 +23,25 @@ class WakeUpTimesScreen extends StatelessWidget {
             width: MediaQuery.of(context).size.width * 0.9,
             child: SfCartesianChart(
               primaryXAxis: CategoryAxis(),
-              legend: Legend(isVisible: true), // グラフの説明
-              tooltipBehavior: TooltipBehavior(enable: true, format: 'point.y時起'), // グラフを選択した時のメニュー
+              // グラフの説明
+              legend: Legend(isVisible: true),
+
+              // グラフを選択した時のメニュー
+              tooltipBehavior: TooltipBehavior(
+                enable: true,
+                format: 'point.y時起',
+              ),
+
+              // グラフをトラックした時の縦線
+              trackballBehavior: TrackballBehavior(
+                enable: true,
+                tooltipSettings: InteractiveTooltip(
+                  enable: true,
+                  color: Colors.red,
+                ),
+              ),
+
+              // グラフデータ
               series: <LineSeries<WakeUpTime, String>>[
                 LineSeries<WakeUpTime, String>(
                   name: '起床時間',
