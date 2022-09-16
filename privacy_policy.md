@@ -15,4 +15,4 @@
 
 ※ご不明な点がございましたら、以下のメールアドレス宛てに、お気軽にお問い合わせください。
 
-sales@best-rise.monster
+yuya.yamamura@best-rise.co.jp
